@@ -1,0 +1,12 @@
+{
+    "name": "stage/concept_atlas_server",
+    "authors": [
+        {
+            "name": "Sibilla Merlo",
+            "email": "sibilla.merlo@di.unito.it"
+        }
+    ],
+    "require": {
+        "bcosca/fatfree": "3.6.5"
+    }
+}
