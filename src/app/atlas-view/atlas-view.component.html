@@ -1,0 +1,8 @@
+<section class="container mt-5">
+    <h3 class="card-title h3 pb-2"> Sei all'interno dell'Atlante: {{currentAtlas.name}}</h3>
+    <app-mapwork-list [atlas]="currentAtlas"></app-mapwork-list>
+</section>
+<app-palette [atlas]="currentAtlas"></app-palette>
+
+<app-mapwork-config *ngIf="user.role === 'admin'"></app-mapwork-config>
+<app-user-management-atlas *ngIf="user.role === 'admin'"></app-user-management-atlas>

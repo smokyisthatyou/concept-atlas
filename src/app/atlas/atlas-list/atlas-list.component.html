@@ -1,0 +1,21 @@
+<div class="jumbotron">
+  <h3 class="card-title h3 pb-2"><strong>Atlanti disponibili:</strong></h3>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Descrizione</th>
+        <th scope="col">Proprietario</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let a of atlasList">
+      <tr>
+        <td (click)="openAtlas(a)">{{a.name | titlecase}}</td>
+        <td>{{a.description}}</td>
+        <td>{{a.owner}}</td>
+        <td><button type="button" class="btn btn-secondary" (click)="deleteAtlas(a)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
