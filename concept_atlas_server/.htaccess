@@ -1,15 +1,7 @@
-# Enable rewrite engine and route requests to framework
 RewriteEngine On
 
-# Some servers require you to specify the `RewriteBase` directive
-# In such cases, it should be the path (relative to the document root)
-# containing this .htaccess file
-#
-RewriteBase /
-Header set Access-Control-Allow-Origin "*"
-Header set Access-Control-Allow-Headers "Content-Type, Authorization, Origin"
 
-RewriteRule ^(tmp)\/|\.ini$ - [R=404]
+RewriteRule ^(app|dict|ns|tmp)\/|\.ini$ - [R=404]
 
 RewriteCond %{REQUEST_FILENAME} !-l
 RewriteCond %{REQUEST_FILENAME} !-f
