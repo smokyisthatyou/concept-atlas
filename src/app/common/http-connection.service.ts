@@ -10,6 +10,7 @@ import {IUser} from '../model/IUser';
 export class HttpConnectionService {
 
     user: IUser;
+    token: string;
 
   constructor(private http: HttpClient) { }
 
@@ -23,16 +24,17 @@ export class HttpConnectionService {
           token
         }
     ).subscribe(
-        onSuccess => {
-            console.log('login was successful, ' + token);
-          // login was successful
-          // tslint:disable-next-line:max-line-length
-          // save the token that you got from your REST API in your preferred location i.e. as a Cookie or LocalStorage as you do with normal login
-        }, onFail => {
-            // login was unsuccessful
-            // show an error message
-            return throwError('login was unsuccessful');
+        res => {
+            // tslint:disable-next-line:triple-equals
+            if (res['email'] == '') {
+                alert('This user in not in the db');
+            } else {
+                this.token = token;
+                this.user = res;
+                window.location.assign('http://localhost:4200/atlas');
+            }
         }
     );
   }
+
 }

@@ -5,4 +5,4 @@ export interface IAtlas {
     description: string;
     owner: string;
   }
-  
+

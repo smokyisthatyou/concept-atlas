@@ -3,6 +3,7 @@ import { IAtlas } from 'src/app/model/IAtlas';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AtlasService } from 'src/app/common/atlas.service';
 import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-atlas-list',
@@ -17,15 +18,18 @@ export class AtlasListComponent implements OnInit {
 
   ngOnInit() {
     this.title = 'Atlanti disponibili:';
-    this.atlasList = this.atlasService.getAllAtlas();
+    this.atlasService.getAllAtlas().subscribe(
+        atlas => {
+          this.atlasList = atlas;
+        });
   }
 
-  openAtlas(atlas: IAtlas){
+  openAtlas(atlas: IAtlas) {
     // controllo su atlasService se l'user ha i permessi per accedere all'atlante
     this.router.navigate(['/atlas-view', atlas.id]);
   }
 
-  deleteAtlas(atlas: IAtlas){
+  deleteAtlas(atlas: IAtlas) {
     // controllo su atlasService se l'user ha i permessi per eliminare l'atlante
     // chiedo conferma all'utente
     // elimino l'atlante
