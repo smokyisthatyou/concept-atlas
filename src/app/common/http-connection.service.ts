@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {IUser} from '../model/IUser';
+import {setUpControl} from '@angular/forms/src/directives/shared';
 
 
 @Injectable({
@@ -29,8 +30,7 @@ export class HttpConnectionService {
             if (res['email'] == '') {
                 alert('This user in not in the db');
             } else {
-                this.token = token;
-                this.user = res;
+                this.user = res as IUser;
                 window.location.assign('http://localhost:4200/atlas');
             }
         }

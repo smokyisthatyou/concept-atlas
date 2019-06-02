@@ -23,7 +23,7 @@ export class AtlasViewComponent implements OnInit {
 
   // tslint:disable-next-line:max-line-length
   constructor(private httpConn: HttpConnectionService, private atlasService: AtlasService, private route: ActivatedRoute, private router: Router) {
-    this.user=httpConn.getUser();
+    this.user = httpConn.getUser();
     this.route.params.subscribe(params => this.atlasid = params.idatlas);
     this.currentAtlas = atlasService.getAtlas(this.atlasid);
   }
