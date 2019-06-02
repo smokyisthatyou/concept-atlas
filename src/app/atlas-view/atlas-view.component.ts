@@ -5,7 +5,8 @@ import { IMapwork } from '../model/IMapwork';
 import { AtlasService } from '../common/atlas.service';
 import { Injectable } from '@angular/core';
 import { IUser } from '../model/IUser';
-import { AuthService } from '../common/auth.service';
+import {HttpConnectionService} from '../common/http-connection.service';
+
 
 @Component({
   selector: 'app-atlas-view',
@@ -20,10 +21,11 @@ export class AtlasViewComponent implements OnInit {
   currentAtlas: IAtlas;
 
 
-  constructor(private authService: AuthService,private atlasService: AtlasService, private route: ActivatedRoute, private router: Router) { 
-    this.user=authService.getUser();
-    this.route.params.subscribe(params => this.atlasid = params['idatlas']);
-    this.currentAtlas=atlasService.getAtlas(this.atlasid);
+  // tslint:disable-next-line:max-line-length
+  constructor(private httpConn: HttpConnectionService, private atlasService: AtlasService, private route: ActivatedRoute, private router: Router) {
+    this.user=httpConn.getUser();
+    this.route.params.subscribe(params => this.atlasid = params.idatlas);
+    this.currentAtlas = atlasService.getAtlas(this.atlasid);
   }
 
   ngOnInit() {

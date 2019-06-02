@@ -13,21 +13,21 @@ export class AtlasListComponent implements OnInit {
   title: string;
   atlasList: IAtlas[];
 
-  constructor(private atlasService: AtlasService,private route: ActivatedRoute, private router: Router) {}
+  constructor(private atlasService: AtlasService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    this.title="Atlanti disponibili:";
-    this.atlasList=this.atlasService.getAllAtlas();
+    this.title = 'Atlanti disponibili:';
+    this.atlasList = this.atlasService.getAllAtlas();
   }
 
   openAtlas(atlas: IAtlas){
-    //controllo su atlasService se l'user ha i permessi per accedere all'atlante
+    // controllo su atlasService se l'user ha i permessi per accedere all'atlante
     this.router.navigate(['/atlas-view', atlas.id]);
   }
 
   deleteAtlas(atlas: IAtlas){
-    //controllo su atlasService se l'user ha i permessi per eliminare l'atlante
-    //chiedo conferma all'utente
-    //elimino l'atlante
+    // controllo su atlasService se l'user ha i permessi per eliminare l'atlante
+    // chiedo conferma all'utente
+    // elimino l'atlante
   }
 }

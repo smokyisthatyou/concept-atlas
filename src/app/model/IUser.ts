@@ -4,4 +4,4 @@ export interface IUser {
     surname: string;
     role: string;
   }
-  
+

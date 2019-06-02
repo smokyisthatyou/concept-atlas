@@ -3,7 +3,8 @@ import { Component, HostListener } from '@angular/core';
 import { IUser } from '../model/IUser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AtlasService } from '../common/atlas.service';
-import { AuthService } from '../common/auth.service';
+import {HttpConnectionService} from '../common/http-connection.service';
+
 
 @Component({
   selector: 'app-atlas',
@@ -14,11 +15,11 @@ import { AuthService } from '../common/auth.service';
 export class AtlasComponent {
   user: IUser;
 
-  constructor(private authService: AuthService,private route: ActivatedRoute, private router: Router) { 
-    this.user=authService.getUser();
+  constructor(private httpConn: HttpConnectionService, private route: ActivatedRoute, private router: Router) {
+    this.user = httpConn.getUser();
   }
- 
- 
+
+
   /*
   @HostListener("window:beforeunload", ["$event"]) unloadHandler(event: Event) {
     event.returnValue = false;

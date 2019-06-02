@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
+import {IUser} from '../model/IUser';
 
 
 @Injectable({
@@ -8,7 +9,13 @@ import {Observable, throwError} from 'rxjs';
 })
 export class HttpConnectionService {
 
+    user: IUser;
+
   constructor(private http: HttpClient) { }
+
+  getUser(): IUser {
+      return this.user;
+  }
 
   sendToRestApiMethod(token: string): void {
     this.http.post('http://localhost:8080/concept_atlas_server/login',
