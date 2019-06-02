@@ -1,0 +1,19 @@
+<div class="jumbotron">
+  <h3 class="card-title h3 pb-2"><strong>Mapwork:</strong></h3>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Descrizione</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let m of mapworkList">
+      <tr>
+        <td (click)="openMapwork(m)">{{m.name | titlecase}}</td>
+        <td>{{m.description}}</td>
+        <td><button type="button" class="btn btn-secondary" (click)="deleteMapwork(m)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
