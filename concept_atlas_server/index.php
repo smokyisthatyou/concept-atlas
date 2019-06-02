@@ -1,5 +1,7 @@
 <?php
 
+use DB\SQL;
+
 require_once('./vendor/autoload.php');
 
 
@@ -12,6 +14,11 @@ $f3 = Base::instance();
 //google auth
 $f3->set('CLIENT_ID', '815639073197-4nm8nn59b9amkgtlsd3eanf65gue20ll.apps.googleusercontent.com');
 
+// db setup
+$dbConn = 'mysql:host=127.0.0.1;port=3306;dbname=conceptatlas';
+$dbUser = 'root';
+$dbPassword = '';
+$f3->set('DB', new \DB\SQL($GLOBALS['dbConn'], $GLOBALS['dbUser'], $GLOBALS['dbPassword']));
 
 //test route
 $f3->route('GET /',
@@ -32,11 +39,10 @@ $f3->route('POST /login',
             return;
         }
         $email = $payload['email'];
-        echo json_encode(["email" => $email]);
 
-/*
         $db = $f3->get('DB');
-        $users = $db->exec('SELECT user_id AS id, name AS name FROM users '
+
+        $users = $db->exec('SELECT email,name FROM users '
             . 'WHERE email=?', $email);
         if (count($users) != 1) {
             // User is not registered on server
@@ -44,7 +50,8 @@ $f3->route('POST /login',
             echo json_encode(['error' => "User $email not found on server"]);
         } else
             echo json_encode($users[0]);
-*/
+
+
     });
 
 $f3->run();
