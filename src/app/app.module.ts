@@ -14,7 +14,9 @@ import { MapworkConfigComponent } from './atlas-view/mapwork-config/mapwork-conf
 import { UserManagementAtlasComponent } from './atlas-view/user-management-atlas/user-management-atlas.component';
 import { PaletteComponent } from './common/palette/palette.component';
 import { AuthGuard } from './common/auth.guard';
-
+import { HttpClientModule } from '@angular/common/http';
+import { getAuthServiceConfigs } from './socialloginConfig';
+import {SocialLoginModule, AuthServiceConfig, GoogleLoginProvider} from 'angularx-social-login';
 
 @NgModule({
   declarations: [
@@ -33,9 +35,13 @@ import { AuthGuard } from './common/auth.guard';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    SocialLoginModule
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, {provide: AuthServiceConfig,
+    useFactory: getAuthServiceConfigs
+}],
   bootstrap: [AppComponent]
 })
 

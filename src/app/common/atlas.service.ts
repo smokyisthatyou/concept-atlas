@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable, throwError, from} from 'rxjs';
-import {catchError, tap, concatMap, scan} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError, from } from 'rxjs';
+import { catchError, tap, concatMap, scan } from 'rxjs/operators';
 import { IAtlas } from '../model/IAtlas';
 import { IMapwork } from '../model/IMapwork';
 import { IUser } from '../model/IUser';
@@ -10,14 +10,14 @@ import { IUser } from '../model/IUser';
   providedIn: 'root'
 })
 export class AtlasService {
-  
+
   atlasList: IAtlas[];
   errorHandler: (err: HttpErrorResponse) => Observable<any>;
   mapWorkList: IMapwork[];
 
-  constructor() {
-    
-    this.atlasList=[{
+  constructor(private http: HttpClient) {
+
+    this.atlasList = [{
       'id': 'a1',
       'name': 'Atlante di prova',
       'description': 'prova atlas',
@@ -29,7 +29,7 @@ export class AtlasService {
       'description': 'hello everybody',
       'owner': 'giorgia.manna@unito.it'
     }]
-    this.mapWorkList=[{
+    this.mapWorkList = [{
       'id': 'm1',
       'name': 'Mapwork di prova',
       'atlas': 'a1',
@@ -68,7 +68,7 @@ export class AtlasService {
   }
 
   getMapwork(id: string): IMapwork {
-    return this.mapWorkList.find(x => x.id == id); 
+    return this.mapWorkList.find(x => x.id == id);
   }
 
   getMapworks(atlasid: string): IMapwork[] {
@@ -76,6 +76,18 @@ export class AtlasService {
       m => m.atlas == atlasid);
   }
 
-  
+  getAllAtlasDB(atlasid: string): void {
+    this.http.post('http://localhost:8080/concept_atlas_server/index.php', {atlasid}).subscribe(
+      onSuccess => {
+        // login was successful
+        // tslint:disable-next-line:max-line-length
+        // save the token that you got from your REST API in your preferred location i.e. as a Cookie or LocalStorage as you do with normal login
+      }, onFail => {
+        // login was unsuccessful
+        // show an error message
+      }
+    );
+  }
+
 }
 

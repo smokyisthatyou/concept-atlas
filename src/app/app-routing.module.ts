@@ -13,9 +13,9 @@ const routes: Routes = [
   { path: 'atlas', component: AtlasComponent, canActivate: [AuthGuard] },
   { path: 'atlas-view/:idatlas', component: AtlasViewComponent, canActivate: [AuthGuard] },
   { path: 'mapwork-view/:idmapwork', component: MapworkViewComponent, canActivate: [AuthGuard] },
-  //ora la pagina principale è atlas, da sostituire con home che è la pagina di login
-  { path: '', redirectTo: 'atlas', pathMatch: 'full' },
-  { path: '**', redirectTo: 'atlas' }
+
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({
