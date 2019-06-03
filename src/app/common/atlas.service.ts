@@ -83,6 +83,8 @@ export class AtlasService {
       m => m.atlas == atlasid);
   }
 
+
+
 // non ho capito a cosa serva
   getAllAtlasDB(atlasid: string): void {
     this.http.post('http://localhost:8080/concept_atlas_server/index.php', {atlasid}).subscribe(

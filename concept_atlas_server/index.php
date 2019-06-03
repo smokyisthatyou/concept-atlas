@@ -20,6 +20,7 @@ $dbUser = 'root';
 $dbPassword = '';
 $f3->set('DB', new \DB\SQL($GLOBALS['dbConn'], $GLOBALS['dbUser'], $GLOBALS['dbPassword']));
 
+
 //test route
 $f3->route('GET /',
     function ($f3) {
@@ -34,7 +35,6 @@ $f3->route('POST /login',
         $client = new Google_Client(['client_id' => $f3->get('CLIENT_ID')]);
         $payload = $client->verifyIdToken($token); //send the token id to the server for verification
         if (!$payload) {
-            echo json_encode(['msg' => "wtf"]);
             $f3->error(500, "Invalid user token");
             return;
         }
@@ -42,16 +42,23 @@ $f3->route('POST /login',
 
         $db = $f3->get('DB');
 
-        $users = $db->exec('SELECT email,name FROM users '
+
+        $users = $db->exec('SELECT * FROM users '
             . 'WHERE email=?', $email);
         if (count($users) != 1) {
             // User is not registered on server
             // Refuse
-            echo json_encode(['error' => "User $email not found on server"]);
+            echo json_encode(['email' => ""]);
         } else
             echo json_encode($users[0]);
+    });
 
+$f3->route('GET /atlas',
+    function ($f3) {
+        $db = $f3->get('DB');
 
+        $allAtlas = $db->exec('SELECT name, description, owner FROM atlas ');
+        echo json_encode($allAtlas);
     });
 
 $f3->run();
