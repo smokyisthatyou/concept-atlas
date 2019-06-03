@@ -20,7 +20,7 @@ export class MapworkListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.mapworkList = this.atlasService.getMapworks(this.atlas.id);
+    //this.mapworkList = this.atlasService.getMapworks(this.atlas.id);
   }
 
   openMapwork(mapwork: IMapwork){

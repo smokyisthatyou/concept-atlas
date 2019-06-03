@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {AuthService, GoogleLoginProvider} from 'angularx-social-login';
 import {HttpConnectionService} from './common/http-connection.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +31,7 @@ export class AppComponent {
     this.socialAuthService.signOut().then(function() {
       window.location.assign('http://localhost:4200');
     });
+    this.httpConn.resetUser();
   }
 
 }
