@@ -24,6 +24,13 @@ export class AppComponent {
         });
   }
 
+  logOut() {
+    // tslint:disable-next-line:only-arrow-functions
+    this.socialAuthService.signOut().then(function() {
+      window.location.assign('http://localhost:4200');
+    });
+  }
+
 }
 
 
