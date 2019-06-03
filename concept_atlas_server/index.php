@@ -57,7 +57,7 @@ $f3->route('GET /atlas',
     function ($f3) {
         $db = $f3->get('DB');
 
-        $allAtlas = $db->exec('SELECT name, description, owner FROM atlas ');
+        $allAtlas = $db->exec('SELECT id, name, description, owner FROM atlas ');
         echo json_encode($allAtlas);
     });
 
