@@ -4,7 +4,6 @@ import { HomeComponent } from './home/home.component';
 import { AtlasComponent } from './atlas/atlas.component';
 import { AtlasViewComponent } from './atlas-view/atlas-view.component';
 import { MapworkViewComponent } from './mapwork-view/mapwork-view.component';
-import { AppComponent } from './app.component';
 import { AuthGuard } from './common/auth.guard';
 
 
@@ -13,7 +12,6 @@ const routes: Routes = [
   { path: 'atlas', component: AtlasComponent, canActivate: [AuthGuard] },
   { path: 'atlas-view/:idatlas', component: AtlasViewComponent, canActivate: [AuthGuard] },
   { path: 'mapwork-view/:idmapwork', component: MapworkViewComponent, canActivate: [AuthGuard] },
-
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];
@@ -28,4 +26,5 @@ const routes: Routes = [
     RouterModule
   ]
 })
+
 export class AppRoutingModule { }

@@ -1,10 +1,7 @@
-import {Injectable} from '@angular/core';
-import { Component, HostListener } from '@angular/core';
-import { IUser } from '../model/IUser';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AtlasService } from '../common/atlas.service';
-import {HttpConnectionService} from '../common/http-connection.service';
-
+import { AuthenticationService } from '../common/authentication.service';
+import { IUser } from '../model/IUser';
 
 @Component({
   selector: 'app-atlas',
@@ -14,19 +11,11 @@ import {HttpConnectionService} from '../common/http-connection.service';
 
 export class AtlasComponent {
   user: IUser;
-
-  constructor(private httpConn: HttpConnectionService, private route: ActivatedRoute, private router: Router) {
-    this.user = httpConn.getUser();
+  constructor(private authenticationService: AuthenticationService, private route: ActivatedRoute, private router: Router) {
+    this.user = authenticationService.getUser();
   }
-
-
-  /*
-  @HostListener("window:beforeunload", ["$event"]) unloadHandler(event: Event) {
-    event.returnValue = false;
+  userIsAdmin() {
+    //non riesco a leggere user.role == 'admin' da authenticationService 
+    return true;
   }
-
-  canDeactivate() {
-    return confirm("Controllo che l'user abbia i permessi necessari per accedere all'atlante.");
-  }*/
-
 }
