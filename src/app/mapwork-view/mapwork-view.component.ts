@@ -17,10 +17,9 @@ export class MapworkViewComponent implements OnInit {
 
   constructor(private atlasService: AtlasService, private route: ActivatedRoute, private router: Router) {
     this.route.params.subscribe(params => this.mapworkid = params.idmapwork);
-    this.currentMapwork = atlasService.getMapwork(this.mapworkid);
-    this.currentAtlas = atlasService.getAtlas(this.currentMapwork.atlas);
+    //this.currentMapwork = atlasService.getMapwork(this.mapworkid);
+    //this.currentAtlas = atlasService.getAtlas(this.currentMapwork.atlas);
   }
-
 
   ngOnInit() {
   }
