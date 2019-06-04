@@ -16,9 +16,7 @@ import { PaletteComponent } from './common/palette/palette.component';
 import { AuthGuard } from './common/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { getAuthServiceConfigs } from './socialloginConfig';
-import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
-import { AuthenticationService } from './common/authentication.service';
-import { AtlasService } from './common/atlas.service';
+import {SocialLoginModule, AuthServiceConfig, GoogleLoginProvider} from 'angularx-social-login';
 
 @NgModule({
   declarations: [
@@ -41,8 +39,9 @@ import { AtlasService } from './common/atlas.service';
     HttpClientModule,
     SocialLoginModule
   ],
-  providers: [AuthenticationService, AtlasService, AuthGuard,
-    { provide: AuthServiceConfig, useFactory: getAuthServiceConfigs }],
+  providers: [AuthGuard, {provide: AuthServiceConfig,
+    useFactory: getAuthServiceConfigs
+}],
   bootstrap: [AppComponent]
 })
 
