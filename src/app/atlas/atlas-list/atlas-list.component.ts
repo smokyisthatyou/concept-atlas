@@ -33,6 +33,5 @@ export class AtlasListComponent implements OnInit {
     // controllo su atlasService se l'user ha i permessi per eliminare l'atlante
     // chiedo conferma all'utente
     // elimino l'atlante
-
   }
 }
