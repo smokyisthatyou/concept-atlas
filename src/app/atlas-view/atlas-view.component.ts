@@ -25,7 +25,7 @@ export class AtlasViewComponent implements OnInit {
   constructor(private httpConn: HttpConnectionService, private atlasService: AtlasService, private route: ActivatedRoute, private router: Router) {
     this.user = httpConn.getUser();
     this.route.params.subscribe(params => this.atlasid = params.idatlas);
-    this.currentAtlas = atlasService.getAtlas(this.atlasid);
+   // this.currentAtlas = atlasService.getAtlas(this.atlasid);
   }
 
   ngOnInit() {
