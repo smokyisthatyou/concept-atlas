@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Giu 02, 2019 alle 21:54
+-- Creato il: Giu 11, 2019 alle 23:36
 -- Versione del server: 10.1.38-MariaDB
 -- Versione PHP: 7.3.4
 
@@ -53,7 +53,9 @@ CREATE TABLE `concept` (
   `id` varchar(255) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` varchar(500) NOT NULL,
-  `palette` varchar(255) NOT NULL
+  `synonyms` varchar(500) DEFAULT NULL,
+  `palette` varchar(255) NOT NULL,
+  `mapwork` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -78,9 +80,10 @@ CREATE TABLE `concpersp` (
 
 CREATE TABLE `mapwork` (
   `id` varchar(255) NOT NULL,
-  `name` varchar(50) NOT NULL,
+  `name` varchar(100) NOT NULL,
   `atlas` varchar(255) NOT NULL,
-  `privacy` varchar(25) NOT NULL
+  `privacy` varchar(25) NOT NULL,
+  `root` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -104,8 +107,7 @@ CREATE TABLE `perspective` (
   `id` varchar(255) NOT NULL,
   `name` varchar(100) NOT NULL,
   `author` varchar(255) NOT NULL,
-  `mapwork` varchar(255) NOT NULL,
-  `father` varchar(255) NOT NULL
+  `mapwork` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -133,7 +135,7 @@ CREATE TABLE `relationship` (
 --
 
 CREATE TABLE `relationshiptype` (
-  `id` varchar(155) NOT NULL,
+  `id` varchar(255) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` varchar(500) NOT NULL,
   `palette` varchar(255) NOT NULL
@@ -159,8 +161,19 @@ CREATE TABLE `teamatlas` (
 
 CREATE TABLE `teammap` (
   `id_user` varchar(255) NOT NULL,
-  `id_map` varchar(255) NOT NULL,
-  `role` varchar(25) NOT NULL
+  `id_map` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `tree`
+--
+
+CREATE TABLE `tree` (
+  `father` varchar(255) NOT NULL,
+  `child` varchar(255) NOT NULL,
+  `mapwork` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -201,7 +214,8 @@ ALTER TABLE `atlas`
 --
 ALTER TABLE `concept`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `palette` (`palette`);
+  ADD KEY `palette` (`palette`),
+  ADD KEY `mapwork` (`mapwork`);
 
 --
 -- Indici per le tabelle `concpersp`
@@ -231,8 +245,7 @@ ALTER TABLE `palette`
 ALTER TABLE `perspective`
   ADD PRIMARY KEY (`id`),
   ADD KEY `author` (`author`),
-  ADD KEY `mapwork` (`mapwork`),
-  ADD KEY `father` (`father`);
+  ADD KEY `mapwork` (`mapwork`);
 
 --
 -- Indici per le tabelle `relationship`
@@ -266,6 +279,14 @@ ALTER TABLE `teammap`
   ADD KEY `id_map` (`id_map`);
 
 --
+-- Indici per le tabelle `tree`
+--
+ALTER TABLE `tree`
+  ADD PRIMARY KEY (`father`,`child`),
+  ADD KEY `child` (`child`),
+  ADD KEY `mapwork` (`mapwork`);
+
+--
 -- Indici per le tabelle `users`
 --
 ALTER TABLE `users`
@@ -285,7 +306,8 @@ ALTER TABLE `atlas`
 -- Limiti per la tabella `concept`
 --
 ALTER TABLE `concept`
-  ADD CONSTRAINT `concept_ibfk_1` FOREIGN KEY (`palette`) REFERENCES `palette` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `concept_ibfk_1` FOREIGN KEY (`palette`) REFERENCES `palette` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `concept_ibfk_2` FOREIGN KEY (`mapwork`) REFERENCES `mapwork` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `concpersp`
@@ -310,9 +332,8 @@ ALTER TABLE `palette`
 -- Limiti per la tabella `perspective`
 --
 ALTER TABLE `perspective`
-  ADD CONSTRAINT `perspective_ibfk_1` FOREIGN KEY (`author`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `perspective_ibfk_2` FOREIGN KEY (`mapwork`) REFERENCES `mapwork` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `perspective_ibfk_3` FOREIGN KEY (`father`) REFERENCES `perspective` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `perspective_ibfk_1` FOREIGN KEY (`author`) REFERENCES `teammap` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `perspective_ibfk_2` FOREIGN KEY (`mapwork`) REFERENCES `mapwork` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `relationship`
@@ -340,8 +361,16 @@ ALTER TABLE `teamatlas`
 -- Limiti per la tabella `teammap`
 --
 ALTER TABLE `teammap`
-  ADD CONSTRAINT `teammap_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `teammap_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `teamatlas` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `teammap_ibfk_2` FOREIGN KEY (`id_map`) REFERENCES `mapwork` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `tree`
+--
+ALTER TABLE `tree`
+  ADD CONSTRAINT `tree_ibfk_1` FOREIGN KEY (`father`) REFERENCES `perspective` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tree_ibfk_2` FOREIGN KEY (`child`) REFERENCES `perspective` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tree_ibfk_3` FOREIGN KEY (`mapwork`) REFERENCES `mapwork` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
