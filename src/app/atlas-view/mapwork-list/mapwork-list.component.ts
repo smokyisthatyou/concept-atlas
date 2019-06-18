@@ -14,24 +14,31 @@ export class MapworkListComponent implements OnInit {
 
   selectedMapwork: IMapwork;
   mapworkList: IMapwork[];
-  @Input() atlas: IAtlas;
+  @Input() atlasid: string;
 
-  constructor(private atlasService: AtlasService,private route: ActivatedRoute, private router: Router) {
+  constructor(private atlasService: AtlasService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {
-    //this.mapworkList = this.atlasService.getMapworks(this.atlas.id);
+    this.atlasService.getMapworks(this.atlasid).subscribe(
+        mapworks => {
+          this.mapworkList = mapworks;
+        });
   }
 
-  openMapwork(mapwork: IMapwork){
-    //controllo su atlasService se il mapwork è pubblico
-    //se il mapwork è privato controllo se l'utente fa parte del team
+  createMapwork() {
+
+  }
+
+  openMapwork(mapwork: IMapwork) {
+    // controllo su atlasService se il mapwork è pubblico
+    // se il mapwork è privato controllo se l'utente fa parte del team
     this.router.navigate(['/mapwork-view', mapwork.id]);
   }
 
   deleteMapwork(mapwork: IMapwork){
-    //controllo su atlasService se l'user ha i permessi per eliminare il mapwork
-    //chiedo conferma all'utente
-    //elimino il mapwork
+    // controllo su atlasService se l'user ha i permessi per eliminare il mapwork
+    // chiedo conferma all'utente
+    // elimino il mapwork
   }
 }

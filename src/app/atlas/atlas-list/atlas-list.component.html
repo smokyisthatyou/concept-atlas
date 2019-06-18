@@ -1,5 +1,13 @@
 <div class="jumbotron">
-  <h3 class="card-title h3 pb-2"><strong>Atlanti disponibili:</strong></h3>
+  <div class="row flex-nowrap justify-content-between align-items-center">
+    <div class="col-3 text-center">
+      <h3 class="card-title h3 pb-2"><strong>Atlanti disponibili:</strong></h3>
+    </div>
+
+    <div class="col-9 d-flex justify-content-end align-items-center">
+    <button type="button" class="btn btn-primary" (click)="createAtlas()">Add New Atlas</button>
+    </div>
+  </div>
   <table class="table table-hover">
     <thead>
       <tr>

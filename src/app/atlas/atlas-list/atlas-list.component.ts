@@ -29,9 +29,14 @@ export class AtlasListComponent implements OnInit {
     this.router.navigate(['/atlas-view', atlas.id]);
   }
 
-  deleteAtlas(atlas: IAtlas) {
-    // controllo su atlasService se l'user ha i permessi per eliminare l'atlante
-    // chiedo conferma all'utente
-    // elimino l'atlante
+  createAtlas() {
+    // TODO: creazione atlante
   }
+
+  deleteAtlas(atlas: IAtlas) {
+    // TODO: controllo su atlasService se l'user ha i permessi per eliminare l'atlante
+    // TODO: chiedo conferma all'utente
+    // TODO: elimino l'atlante
+  }
+
 }

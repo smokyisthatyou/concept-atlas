@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import { Observable, throwError, from } from 'rxjs';
 import { catchError, tap, concatMap, scan } from 'rxjs/operators';
 import { IAtlas } from '../model/IAtlas';
@@ -16,9 +16,8 @@ export class AtlasService {
   constructor(private http: HttpClient) { }
 
   getAllAtlas(): Observable<IAtlas[]> {
-    return this.http.get<IAtlas[]>('http://localhost:8080/concept_atlas_server/atlas').pipe(
-        tap(data => console.log(JSON.stringify(data))),
-    );
+    return this.http.get<IAtlas[]>('http://localhost:8080/concept_atlas_server/atlas');
+
   }
 
   getAtlas(id: string): IAtlas {
@@ -29,9 +28,9 @@ export class AtlasService {
     return this.mapWorkList.find(x => x.id == id);
   }
 
-  getMapworks(atlasid: string): IMapwork[] {
-    return this.mapWorkList.filter(
-      m => m.atlas == atlasid);
+  getMapworks(atlasid: string): Observable<IMapwork[]> {
+    // @ts-ignore
+    return this.http.get<IMapwork>('http://localhost:8080/concept_atlas_server/mapworks/' + atlasid  );
   }
 
 }

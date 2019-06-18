@@ -8,7 +8,6 @@ import { AtlasListComponent } from './atlas/atlas-list/atlas-list.component';
 import { AtlasViewComponent } from './atlas-view/atlas-view.component';
 import { MapworkListComponent } from './atlas-view/mapwork-list/mapwork-list.component';
 import { MapworkViewComponent } from './mapwork-view/mapwork-view.component';
-import { PerspectiveListComponent } from './mapwork-view/perspective-list/perspective-list.component';
 import { AtlasCreationComponent } from './atlas/atlas-creation/atlas-creation.component';
 import { MapworkConfigComponent } from './atlas-view/mapwork-config/mapwork-config.component';
 import { UserManagementAtlasComponent } from './atlas-view/user-management-atlas/user-management-atlas.component';
@@ -17,6 +16,8 @@ import { AuthGuard } from './common/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { getAuthServiceConfigs } from './socialloginConfig';
 import {SocialLoginModule, AuthServiceConfig, GoogleLoginProvider} from 'angularx-social-login';
+import { PerspectiveTreeComponent } from './mapwork-view/perspective-tree/perspective-tree.component';
+
 
 @NgModule({
   declarations: [
@@ -27,11 +28,11 @@ import {SocialLoginModule, AuthServiceConfig, GoogleLoginProvider} from 'angular
     AtlasViewComponent,
     MapworkListComponent,
     MapworkViewComponent,
-    PerspectiveListComponent,
     AtlasCreationComponent,
     MapworkConfigComponent,
     UserManagementAtlasComponent,
     PaletteComponent,
+    PerspectiveTreeComponent,
   ],
   imports: [
     BrowserModule,
