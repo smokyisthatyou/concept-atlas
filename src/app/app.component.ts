@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
 import { AuthenticationService } from './common/authentication.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -12,12 +13,13 @@ import { AuthenticationService } from './common/authentication.service';
 export class AppComponent {
   title = 'ConceptAtlas';
   isLogged: boolean;
-  constructor(private socialAuthService: AuthService, private authenticationService: AuthenticationService) {
+  constructor(private router: Router, private socialAuthService: AuthService, private authenticationService: AuthenticationService) {
     const currentUser = this.authenticationService.currentUserValue;
     if (currentUser) {
       this.isLogged = true;
     }
   }
+
 
   public signinWithGoogle() {
     const socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;

@@ -27,7 +27,7 @@ export class AuthenticationService {
   }
   */
 
-  //don't work
+  // doesn't work
   public getUser(): IUser {
     return this.user;
   }
@@ -35,19 +35,20 @@ export class AuthenticationService {
   resetUser() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    this.user=null;
+    this.user = null;
   }
 
   sendToRestApiMethod(token: string) {
     return this.http.post('http://localhost:8080/concept_atlas_server/login', { token }
     ).subscribe(
       res => {
-        if (res['email'] == '') {
+        if (res['email'] === '') {
           alert('This user in not in the db');
         } else {
           this.user = res as IUser;
           localStorage.setItem('currentUser', JSON.stringify(this.user));
           this.currentUserSubject.next(this.user);
+          // i didn't used route.navigate so the app component is refreshed and the button for logout is displayed correctly
           window.location.assign('http://localhost:4200/atlas');
         }
       }
