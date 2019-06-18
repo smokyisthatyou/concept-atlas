@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Giu 11, 2019 alle 23:36
+-- Creato il: Giu 18, 2019 alle 21:47
 -- Versione del server: 10.1.38-MariaDB
 -- Versione PHP: 7.3.4
 
@@ -40,7 +40,7 @@ CREATE TABLE `atlas` (
 --
 
 INSERT INTO `atlas` (`id`, `name`, `description`, `owner`) VALUES
-('1', 'Primo Atlas', 'Questo è il primo atas di prova, sarebbe bello funzionasse tutto quanto', 'sibilla.merlo@edu.unito.it'),
+('1', 'Primo Atlas', 'Questo è il primo atlas di prova, sarebbe bello funzionasse tutto quanto', 'sibilla.merlo@edu.unito.it'),
 ('2', 'Secondo Atlas', 'Ha funzionato.', 'giorgia.manna@edu.unito.it');
 
 -- --------------------------------------------------------
@@ -83,8 +83,16 @@ CREATE TABLE `mapwork` (
   `name` varchar(100) NOT NULL,
   `atlas` varchar(255) NOT NULL,
   `privacy` varchar(25) NOT NULL,
-  `root` varchar(255) NOT NULL
+  `root` varchar(255) NOT NULL,
+  `description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dump dei dati per la tabella `mapwork`
+--
+
+INSERT INTO `mapwork` (`id`, `name`, `atlas`, `privacy`, `root`, `description`) VALUES
+('1', 'Primo Mapwork', '1', 'public', '1', 'Questo è il primo Mapwork');
 
 -- --------------------------------------------------------
 
@@ -109,6 +117,15 @@ CREATE TABLE `perspective` (
   `author` varchar(255) NOT NULL,
   `mapwork` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dump dei dati per la tabella `perspective`
+--
+
+INSERT INTO `perspective` (`id`, `name`, `author`, `mapwork`) VALUES
+('1', 'Prima Prospettiva', 'sibilla.merlo@edu.unito.it', '1'),
+('2', 'Seconda Prospettiva', 'sibilla.merlo@edu.unito.it', '1'),
+('3', 'Terza Prospettiva', 'giorgia.manna@edu.unito.it', '1');
 
 -- --------------------------------------------------------
 
@@ -153,6 +170,14 @@ CREATE TABLE `teamatlas` (
   `role` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dump dei dati per la tabella `teamatlas`
+--
+
+INSERT INTO `teamatlas` (`id_user`, `id_atlas`, `role`) VALUES
+('giorgia.manna@edu.unito.it', '1', 'admin'),
+('sibilla.merlo@edu.unito.it', '1', 'admin');
+
 -- --------------------------------------------------------
 
 --
@@ -163,6 +188,14 @@ CREATE TABLE `teammap` (
   `id_user` varchar(255) NOT NULL,
   `id_map` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dump dei dati per la tabella `teammap`
+--
+
+INSERT INTO `teammap` (`id_user`, `id_map`) VALUES
+('giorgia.manna@edu.unito.it', '1'),
+('sibilla.merlo@edu.unito.it', '1');
 
 -- --------------------------------------------------------
 
@@ -175,6 +208,14 @@ CREATE TABLE `tree` (
   `child` varchar(255) NOT NULL,
   `mapwork` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dump dei dati per la tabella `tree`
+--
+
+INSERT INTO `tree` (`father`, `child`, `mapwork`) VALUES
+('1', '2', '1'),
+('1', '3', '1');
 
 -- --------------------------------------------------------
 

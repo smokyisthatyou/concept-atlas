@@ -21,12 +21,6 @@ $dbPassword = '';
 $f3->set('DB', new \DB\SQL($GLOBALS['dbConn'], $GLOBALS['dbUser'], $GLOBALS['dbPassword']));
 
 
-//test route
-$f3->route('GET /',
-    function ($f3) {
-        echo "hello";
-    });
-
 //login auth
 $f3->route('POST /login',
     function ($f3) {
@@ -38,6 +32,7 @@ $f3->route('POST /login',
             $f3->error(500, "Invalid user token");
             return;
         }
+
         $email = $payload['email'];
 
         $db = $f3->get('DB');
@@ -59,6 +54,14 @@ $f3->route('GET /atlas',
 
         $allAtlas = $db->exec('SELECT id, name, description, owner FROM atlas ');
         echo json_encode($allAtlas);
+    });
+
+$f3->route('GET /mapworks/@atlasid',
+    function ($f3) {
+        $db = $f3->get('DB');
+        $atlasid = $f3->get('PARAMS.atlasid');
+        $mapworks = $db->exec('SELECT * FROM mapwork WHERE mapwork.atlas = ?',[$atlasid]);
+        echo json_encode($mapworks);
     });
 
 $f3->run();

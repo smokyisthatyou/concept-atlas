@@ -47,6 +47,7 @@ const TREE_DATA: FoodNode[] = [
 
 export class PerspectiveTreeComponent implements OnInit {
   constructor() {
+
     this.dataSource.data = TREE_DATA;
 
     this.treeControl.dataNodes = TREE_DATA;
@@ -60,6 +61,12 @@ export class PerspectiveTreeComponent implements OnInit {
 
 
   ngOnInit() {
+    /*
+    myDataObservable.subscribe(data => {
+      this.dataSource.data = data
+      this.treeControl.dataNodes = data;
+    });
+     */
     this.treeControl.expandAll();
   }
 
