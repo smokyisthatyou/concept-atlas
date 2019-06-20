@@ -65,7 +65,8 @@ export class PerspectiveTreeComponent implements OnInit {
 }
 
   clickHandler(perspective) {
-    this.router.navigate(['/', perspective.id]);
+    console.log(perspective);
+    // this.router.navigate(['/', perspective.id]);
     }
 
 

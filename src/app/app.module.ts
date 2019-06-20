@@ -20,6 +20,7 @@ import {SocialLoginModule, AuthServiceConfig, GoogleLoginProvider} from 'angular
 import { PerspectiveTreeComponent } from './mapwork-view/perspective-tree/perspective-tree.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule, MatIconModule} from '@angular/material';
+import { DrawPerspectiveComponent } from './mapwork-view/draw-perspective/draw-perspective.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {MatButtonModule, MatIconModule} from '@angular/material';
     UserManagementAtlasComponent,
     PaletteComponent,
     PerspectiveTreeComponent,
+    DrawPerspectiveComponent,
   ],
   imports: [
     BrowserModule,
