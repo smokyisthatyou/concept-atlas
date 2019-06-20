@@ -3,6 +3,7 @@ import { IMapwork } from 'src/app/model/IMapwork';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {IPerspective} from '../../model/IPerspective';
+import {PerspectiveTreeService} from './perspective-tree.service';
 
 interface FoodNode {
   name: string;
@@ -37,8 +38,6 @@ const TREE_DATA: FoodNode[] = [
   },
 ];
 
-
-
 @Component({
   selector: 'app-perspective-tree',
   templateUrl: './perspective-tree.component.html',
@@ -46,27 +45,26 @@ const TREE_DATA: FoodNode[] = [
 })
 
 export class PerspectiveTreeComponent implements OnInit {
-  constructor() {
+
+  treeControl = new NestedTreeControl<FoodNode>(node => node.children);
+  dataSource = new MatTreeNestedDataSource<FoodNode>();
+  @Input() mapwork: string;
+  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+
+  constructor(private treeService: PerspectiveTreeService) {
 
     this.dataSource.data = TREE_DATA;
 
     this.treeControl.dataNodes = TREE_DATA;
   }
-  treeControl = new NestedTreeControl<FoodNode>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<FoodNode>();
-
-  @Input() mapwork: IMapwork;
-  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
-
-
 
   ngOnInit() {
-    /*
-    myDataObservable.subscribe(data => {
-      this.dataSource.data = data
+/*
+    this.treeService.getPerspectiveTree(this.mapwork).subscribe(data => {
+      this.dataSource.data = data;
       this.treeControl.dataNodes = data;
     });
-     */
+*/
     this.treeControl.expandAll();
   }
 
