@@ -12,7 +12,7 @@ export class PerspectiveTreeService {
   constructor(private http: HttpClient) { }
 
   getPerspectiveTree(mapworkid: string): Observable<IPerspective[]> {
-    return this.http.get<IPerspective[]>('http://localhost:8080/concept_atlas_server/mapworks/' + mapworkid );
+    return this.http.get<IPerspective[]>('http://localhost:8080/concept_atlas_server/perspectivetree/' + mapworkid );
   }
 
 }

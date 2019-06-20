@@ -5,6 +5,7 @@ import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {IPerspective} from '../../model/IPerspective';
 import {PerspectiveTreeService} from './perspective-tree.service';
 
+/*
 interface FoodNode {
   name: string;
   children?: FoodNode[];
@@ -37,6 +38,8 @@ const TREE_DATA: FoodNode[] = [
     ]
   },
 ];
+*/
+
 
 @Component({
   selector: 'app-perspective-tree',
@@ -46,28 +49,31 @@ const TREE_DATA: FoodNode[] = [
 
 export class PerspectiveTreeComponent implements OnInit {
 
-  treeControl = new NestedTreeControl<FoodNode>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<FoodNode>();
+  treeControl = new NestedTreeControl<IPerspective>(node => node.children);
+  dataSource = new MatTreeNestedDataSource<IPerspective>();
   @Input() mapwork: string;
-  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+  hasChild = (_: number, node: IPerspective) => !!node.children && node.children.length > 0;
 
   constructor(private treeService: PerspectiveTreeService) {
-
+/*
     this.dataSource.data = TREE_DATA;
 
     this.treeControl.dataNodes = TREE_DATA;
+*/
+
   }
 
   ngOnInit() {
-/*
+
     this.treeService.getPerspectiveTree(this.mapwork).subscribe(data => {
+      // @ts-ignore
       this.dataSource.data = data;
       this.treeControl.dataNodes = data;
+      this.treeControl.expandAll();
+      console.log(data);
     });
-*/
-    this.treeControl.expandAll();
+
+
   }
-
-
 
 }

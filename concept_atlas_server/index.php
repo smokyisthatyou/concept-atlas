@@ -48,6 +48,7 @@ $f3->route('POST /login',
             echo json_encode($users[0]);
     });
 
+//get all atlas from the db
 $f3->route('GET /atlas',
     function ($f3) {
         $db = $f3->get('DB');
@@ -56,6 +57,7 @@ $f3->route('GET /atlas',
         echo json_encode($allAtlas);
     });
 
+//get all mapworks in the atlas specified
 $f3->route('GET /mapworks/@atlasid',
     function ($f3) {
         $db = $f3->get('DB');
@@ -63,6 +65,44 @@ $f3->route('GET /mapworks/@atlasid',
         $mapworks = $db->exec('SELECT * FROM mapwork WHERE mapwork.atlas = ?',[$atlasid]);
         echo json_encode($mapworks);
     });
+
+//get a json with the tree structure. wrapper function
+$f3->route('GET /perspectivetree/@mapworkid',
+    function($f3) {
+        $db = $f3->get('DB');
+        $mapworkid = $f3->get('PARAMS.mapworkid');
+
+        $root ='SELECT * FROM mapwork WHERE mapwork.id = :mapworkid';
+        $query = $db->prepare($root);
+        $query->bindparam(':mapworkid', $mapworkid);
+        $query->execute();
+        $row = $query->fetch(PDO::FETCH_BOTH);
+
+        $result = getTree($f3, $row['root']);
+        echo json_encode(array($result));
+    });
+
+function getTree($f3,$nodeid){
+    $ch = array();
+    $db = $f3->get('DB');
+    $child ='SELECT * FROM perspective WHERE perspective.id = :id';
+    $query = $db->prepare($child);
+    $query->bindparam(':id', $nodeid);
+    $query->execute();
+    $node = $query->fetch(PDO::FETCH_BOTH);
+    $child = $db->exec('SELECT * FROM tree WHERE tree.father =?',[$nodeid]);
+
+
+    if(empty($child)){
+        return array("id"=>$node['id'], "name"=>$node['name'], "author" =>$node['author']);
+    }
+
+    foreach ($child as $c) {
+        array_push($ch, getTree($f3, $c['child']));
+    }
+    $a = array("id" => $node['id'], "name" => $node['name'], "author" => $node['author'], "children" =>  $ch);
+    return $a;
+}
 
 $f3->run();
 ?>
