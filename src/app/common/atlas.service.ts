@@ -30,7 +30,7 @@ export class AtlasService {
 
   getMapworks(atlasid: string): Observable<IMapwork[]> {
     // @ts-ignore
-    return this.http.get<IMapwork>('http://localhost:8080/concept_atlas_server/mapworks/' + atlasid  );
+    return this.http.get<IMapwork[]>('http://localhost:8080/concept_atlas_server/mapworks/' + atlasid  );
   }
 
 }

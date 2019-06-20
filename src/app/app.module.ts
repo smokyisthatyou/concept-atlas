@@ -14,9 +14,13 @@ import { UserManagementAtlasComponent } from './atlas-view/user-management-atlas
 import { PaletteComponent } from './common/palette/palette.component';
 import { AuthGuard } from './common/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
+import {MatTreeModule} from '@angular/material/tree';
 import { getAuthServiceConfigs } from './socialloginConfig';
 import {SocialLoginModule, AuthServiceConfig, GoogleLoginProvider} from 'angularx-social-login';
 import { PerspectiveTreeComponent } from './mapwork-view/perspective-tree/perspective-tree.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatButtonModule, MatIconModule} from '@angular/material';
+import { DrawPerspectiveComponent } from './mapwork-view/draw-perspective/draw-perspective.component';
 
 
 @NgModule({
@@ -33,12 +37,17 @@ import { PerspectiveTreeComponent } from './mapwork-view/perspective-tree/perspe
     UserManagementAtlasComponent,
     PaletteComponent,
     PerspectiveTreeComponent,
+    DrawPerspectiveComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    SocialLoginModule
+    SocialLoginModule,
+    BrowserAnimationsModule,
+    MatTreeModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [AuthGuard, {provide: AuthServiceConfig,
     useFactory: getAuthServiceConfigs
