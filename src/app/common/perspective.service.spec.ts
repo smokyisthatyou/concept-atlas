@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PerspectiveTreeService } from './perspective-tree.service';
+import {PerspectiveService} from './perspective.service';
 
 describe('PerspectiveTreeService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: PerspectiveTreeService = TestBed.get(PerspectiveTreeService);
+    const service: PerspectiveService = TestBed.get(PerspectiveService);
     expect(service).toBeTruthy();
   });
 });

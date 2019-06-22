@@ -3,44 +3,8 @@ import { IMapwork } from 'src/app/model/IMapwork';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {IPerspective} from '../../model/IPerspective';
-import {PerspectiveTreeService} from '../../common/perspective-tree.service';
+import {PerspectiveService} from '../../common/perspective.service';
 import {Router} from '@angular/router';
-
-/*
-interface FoodNode {
-  name: string;
-  children?: FoodNode[];
-}
-
-const TREE_DATA: FoodNode[] = [
-  {
-    name: 'Fruit',
-    children: [
-      {name: 'Apple'},
-      {name: 'Banana'},
-      {name: 'Fruit loops'},
-    ]
-  }, {
-    name: 'Vegetables',
-    children: [
-      {
-        name: 'Green',
-        children: [
-          {name: 'Broccoli'},
-          {name: 'Brussel sprouts'},
-        ]
-      }, {
-        name: 'Orange',
-        children: [
-          {name: 'Pumpkins'},
-          {name: 'Carrots'},
-        ]
-      },
-    ]
-  },
-];
-*/
-
 
 @Component({
   selector: 'app-perspective-tree',
@@ -55,7 +19,7 @@ export class PerspectiveTreeComponent implements OnInit {
   @Input() mapwork: string;
   hasChild = (_: number, node: IPerspective) => !!node.children && node.children.length > 0;
 
-  constructor(private treeService: PerspectiveTreeService, private router: Router) {
+  constructor(private treeService: PerspectiveService, private router: Router) {
 /*
     this.dataSource.data = TREE_DATA;
 
@@ -65,9 +29,8 @@ export class PerspectiveTreeComponent implements OnInit {
 }
 
   clickHandler(perspective) {
-    console.log(perspective);
-    // this.router.navigate(['/', perspective.id]);
-    }
+    this.treeService.setCurrentPersp(perspective);
+  }
 
 
   ngOnInit() {

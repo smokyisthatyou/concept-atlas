@@ -1,4 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {IPerspective} from '../../model/IPerspective';
+import {PerspectiveService} from '../../common/perspective.service';
+
+
 
 @Component({
   selector: 'app-draw-perspective',
@@ -7,9 +11,13 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class DrawPerspectiveComponent implements OnInit {
 
-  constructor() { }
+  perspective: IPerspective;
+
+  constructor(private perspService: PerspectiveService) { }
 
   ngOnInit() {
+    this.perspService.currentPersp.subscribe(data => this.perspective = data);
   }
+
 
 }

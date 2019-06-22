@@ -1,10 +1,15 @@
 <section class="container mt-3">
   <div class="jumbotron">
-    <div>
-      Perspective name:
-    </div>
-    <div>
-      Author:
-    </div>
+   <div> <b> Perspective name: </b>  {{perspective.name}}  </div>
+    <div> <b> Author: </b>  {{perspective.author}} </div>
+      <br>
+      <canvas id="draw" width="835" height="500" style = "background-color:white;"></canvas>
+      <br>
+      <br>
+      <div class="btn-group" role="group" aria-label="Basic example">
+          <button  class="btn btn-secondary" title="The Perspective will be visible to the team">Publish</button>
+          <button  class="btn btn-secondary" title="Save the current state of your Perspective" >Freeze</button>
+          <button  class="btn btn-secondary" title="Create a new Mapwork from the current Perspective ">Create Mapwork</button>
+      </div>
   </div>
 </section>
