@@ -3,7 +3,7 @@ import { IMapwork } from 'src/app/model/IMapwork';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {IPerspective} from '../../model/IPerspective';
-import {PerspectiveTreeService} from './perspective-tree.service';
+import {PerspectiveTreeService} from '../../common/perspective-tree.service';
 import {Router} from '@angular/router';
 
 /*

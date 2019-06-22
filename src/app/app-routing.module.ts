@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'atlas-view/:idatlas', component: AtlasViewComponent, canActivate: [AuthGuard] },
   { path: 'mapwork-view/:idmapwork', component: MapworkViewComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: '*', redirectTo: 'home' }
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({
