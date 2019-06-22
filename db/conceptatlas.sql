@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Giu 18, 2019 alle 21:47
+-- Creato il: Giu 22, 2019 alle 19:39
 -- Versione del server: 10.1.38-MariaDB
 -- Versione PHP: 7.3.4
 
@@ -40,8 +40,8 @@ CREATE TABLE `atlas` (
 --
 
 INSERT INTO `atlas` (`id`, `name`, `description`, `owner`) VALUES
-('1', 'Primo Atlas', 'Questo è il primo atlas di prova, sarebbe bello funzionasse tutto quanto', 'sibilla.merlo@edu.unito.it'),
-('2', 'Secondo Atlas', 'Ha funzionato.', 'giorgia.manna@edu.unito.it');
+('1', 'Biologia', 'Questo atlas tratta di vari argomenti riguardanti l\'ambito della biologia. ', 'giorgia.manna@edu.unito.it'),
+('2', 'Doungeon&Dragons', 'Questo atlas contiene le istruzioni schematizzate per il gioco di ruolo di D&D.', 'sibilla.merlo@edu.unito.it');
 
 -- --------------------------------------------------------
 
@@ -92,7 +92,9 @@ CREATE TABLE `mapwork` (
 --
 
 INSERT INTO `mapwork` (`id`, `name`, `atlas`, `privacy`, `root`, `description`) VALUES
-('1', 'Primo Mapwork', '1', 'public', '1', 'Questo è il primo Mapwork');
+('1', 'La cellula animale', '1', 'public', '1', 'Spiegazione dei vari componenti e comportamenti della cellulare animale.'),
+('2', 'La cellula vegetale', '1', 'public', '6', 'Spiegazione dei componenti e comportamenti della cellulare vegetale.'),
+('3', 'Battaglia', '2', 'public', '7', 'Regole per la battaglia.');
 
 -- --------------------------------------------------------
 
@@ -123,9 +125,14 @@ CREATE TABLE `perspective` (
 --
 
 INSERT INTO `perspective` (`id`, `name`, `author`, `mapwork`) VALUES
-('1', 'Prima Prospettiva', 'sibilla.merlo@edu.unito.it', '1'),
-('2', 'Seconda Prospettiva', 'sibilla.merlo@edu.unito.it', '1'),
-('3', 'Terza Prospettiva', 'giorgia.manna@edu.unito.it', '1');
+('1', 'Organuli Cellulari', 'giorgia.manna@edu.unito.it', '1'),
+('2', 'Organuli Cellulari-v1.1', 'giorgia.manna@edu.unito.it', '1'),
+('3', 'Organuli Cellulari-v.1.2', 'sibilla.merlo@edu.unito.it', '1'),
+('4', 'Organuli Cellulari-v.1.2.1', 'giorgia.manna@edu.unito.it', '1'),
+('5', 'Organuli Cellulari-v.1.2.2', 'sibilla.merlo@edu.unito.it', '1'),
+('6', 'Tipi di Cellule Vegetali', 'sibilla.merlo@edu.unito.it', '2'),
+('7', 'Statistiche', 'sibilla.merlo@edu.unito.it', '3'),
+('8', 'Statistiche ed Equipaggiamento', 'giorgia.manna@edu.unito.it', '3');
 
 -- --------------------------------------------------------
 
@@ -176,7 +183,9 @@ CREATE TABLE `teamatlas` (
 
 INSERT INTO `teamatlas` (`id_user`, `id_atlas`, `role`) VALUES
 ('giorgia.manna@edu.unito.it', '1', 'admin'),
-('sibilla.merlo@edu.unito.it', '1', 'admin');
+('giorgia.manna@edu.unito.it', '2', 'admin'),
+('sibilla.merlo@edu.unito.it', '1', 'admin'),
+('sibilla.merlo@edu.unito.it', '2', 'admin');
 
 -- --------------------------------------------------------
 
@@ -195,7 +204,9 @@ CREATE TABLE `teammap` (
 
 INSERT INTO `teammap` (`id_user`, `id_map`) VALUES
 ('giorgia.manna@edu.unito.it', '1'),
-('sibilla.merlo@edu.unito.it', '1');
+('giorgia.manna@edu.unito.it', '2'),
+('sibilla.merlo@edu.unito.it', '1'),
+('sibilla.merlo@edu.unito.it', '2');
 
 -- --------------------------------------------------------
 
@@ -215,7 +226,10 @@ CREATE TABLE `tree` (
 
 INSERT INTO `tree` (`father`, `child`, `mapwork`) VALUES
 ('1', '2', '1'),
-('1', '3', '1');
+('1', '3', '1'),
+('3', '4', '1'),
+('3', '5', '1'),
+('7', '8', '3');
 
 -- --------------------------------------------------------
 
