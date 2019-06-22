@@ -57,6 +57,7 @@ $f3->route('GET /atlas',
         echo json_encode($allAtlas);
     });
 
+//get all mapworks in the atlas specified
 $f3->route('GET /mapworks/@atlasid',
     function ($f3) {
         $db = $f3->get('DB');
