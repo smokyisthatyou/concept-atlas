@@ -22,4 +22,20 @@ export class PerspectiveService {
    this.persp.next(persp);
   }
 
+  haveAChild(idPersp: string, user: string) {
+    return this.http.post('http://localhost:8080/concept_atlas_server/child', {idPersp, user});
+  }
+
+  freezePersp(idPersp: string, user: string) {
+    return this.http.post('http://localhost:8080/concept_atlas_server/freeze', {idPersp, user});
+  }
+
+  publishPersp(idPersp: string) {
+    return this.http.put('http://localhost:8080/concept_atlas_server/publish', {idPersp});
+  }
+
+  createMapworkFromPersp(idPersp: string, user: string) {
+    return this.http.post('http://localhost:8080/concept_atlas_server/createMapwork', {idPersp, user});
+  }
+
 }

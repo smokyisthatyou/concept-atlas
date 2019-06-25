@@ -36,7 +36,7 @@ export class MapworkListComponent implements OnInit {
     this.router.navigate(['/mapwork-view', mapwork.id]);
   }
 
-  deleteMapwork(mapwork: IMapwork){
+  deleteMapwork(mapwork: IMapwork) {
     // controllo su atlasService se l'user ha i permessi per eliminare il mapwork
     // chiedo conferma all'utente
     // elimino il mapwork
