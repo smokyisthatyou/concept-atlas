@@ -2,7 +2,7 @@
   <div class="jumbotron">
       <span> <b> Perspective name: </b>  {{perspective.name}}  </span>
       <span> <b> Author: </b>  {{perspective.author}} </span>
-      <span> <b> Can Modify: </b> <span *ngIf="perspective.freezed == 'true'"> No</span> <span *ngIf="perspective.freezed == 'false'"> Yes</span> </span>
+      <span> <b> Can Modify: </b> <span *ngIf="perspective.freezed == 'true' || perspective.author != user.email"> No</span> <span *ngIf="perspective.freezed == 'false' && perspective.author == user.email "> Yes</span> </span>
       <br>
       <br>
       <canvas id="draw" width="835" height="500" style = "background-color:white;"></canvas>

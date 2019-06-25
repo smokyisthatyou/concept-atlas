@@ -43,7 +43,7 @@ export class DrawPerspectiveComponent implements OnInit {
   publish(idPersp: string) {
     // @ts-ignore
     // tslint:disable-next-line:only-arrow-functions
-    this.perspService.publishPersp(idPersp, this.mapwork).subscribe( function() {
+    this.perspService.publishPersp(idPersp).subscribe( function() {
       location.reload();
   });
   }
