@@ -19,7 +19,7 @@ import { getAuthServiceConfigs } from './socialloginConfig';
 import {SocialLoginModule, AuthServiceConfig, GoogleLoginProvider} from 'angularx-social-login';
 import { PerspectiveTreeComponent } from './mapwork-view/perspective-tree/perspective-tree.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule, MatIconModule} from '@angular/material';
+import {MatButtonModule, MatIconModule, MatSidenavModule} from '@angular/material';
 import { DrawPerspectiveComponent } from './mapwork-view/draw-perspective/draw-perspective.component';
 
 
@@ -47,7 +47,8 @@ import { DrawPerspectiveComponent } from './mapwork-view/draw-perspective/draw-p
     BrowserAnimationsModule,
     MatTreeModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSidenavModule
   ],
   providers: [AuthGuard, {provide: AuthServiceConfig,
     useFactory: getAuthServiceConfigs
