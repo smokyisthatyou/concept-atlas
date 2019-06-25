@@ -5,6 +5,8 @@ import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {IPerspective} from '../../model/IPerspective';
 import {PerspectiveService} from '../../common/perspective.service';
 import {Router} from '@angular/router';
+import {IUser} from '../../model/IUser';
+import {AuthenticationService} from '../../common/authentication.service';
 
 @Component({
   selector: 'app-perspective-tree',
@@ -14,12 +16,15 @@ import {Router} from '@angular/router';
 
 export class PerspectiveTreeComponent implements OnInit {
 
+  user: IUser;
+
   treeControl = new NestedTreeControl<IPerspective>(node => node.children);
   dataSource = new MatTreeNestedDataSource<IPerspective>();
   @Input() mapwork: string;
   hasChild = (_: number, node: IPerspective) => !!node.children && node.children.length > 0;
 
-  constructor(private treeService: PerspectiveService, private router: Router) {
+
+  constructor(private treeService: PerspectiveService, private router: Router, private authService: AuthenticationService) {
 /*
     this.dataSource.data = TREE_DATA;
 
@@ -34,6 +39,8 @@ export class PerspectiveTreeComponent implements OnInit {
 
 
   ngOnInit() {
+
+    this.authService.currentUser.subscribe(data => this.user = data);
 
     this.treeService.getPerspectiveTree(this.mapwork).subscribe(data => {
       // @ts-ignore

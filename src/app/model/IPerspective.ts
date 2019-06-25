@@ -3,5 +3,7 @@ export interface IPerspective {
     name: string;
     author: string;
     children?: IPerspective[];
+    published: string;
+    freezed: string;
 }
 

@@ -93,16 +93,137 @@ function getTree($f3,$nodeid){
     $child = $db->exec('SELECT * FROM tree WHERE tree.father =?',[$nodeid]);
 
 
-    if(empty($child)){
-        return array("id"=>$node['id'], "name"=>$node['name'], "author" =>$node['author']);
+    if(empty($child) && $node['published'] == true){
+        return array("id"=>$node['id'], "name"=>$node['name'], "author" =>$node['author'], "published"=>$node['published'], "freezed"=>$node['freezed']);
     }
 
     foreach ($child as $c) {
         array_push($ch, getTree($f3, $c['child']));
     }
-    $a = array("id" => $node['id'], "name" => $node['name'], "author" => $node['author'], "children" =>  $ch);
+    $a = array("id" => $node['id'], "name" => $node['name'], "author" => $node['author'], "children" =>  $ch, "published"=>$node['published'], "freezed"=>$node['freezed']);
     return $a;
 }
+
+//haveAChild operation
+$f3->route('POST /child',
+    function($f3){
+        $db = $f3->get('DB');
+        $body = json_decode($f3->get('BODY'));
+        $perspid = $body->idPersp;
+        $userid = $body->user;
+        $query = $db->prepare('SELECT * FROM perspective WHERE perspective.id = :id');
+        $query->bindparam(':id', $perspid);
+        $query->execute();
+        $currentPersp = $query->fetch(PDO::FETCH_BOTH);
+        $newidpersp=uniqid($userid, true);
+
+        // create new perspective
+        $db->exec('INSERT INTO perspective (id, name, author, mapwork, freezed, published)
+                    VALUES ( ?,?,?,?,"false","false" )',[$newidpersp, $currentPersp['name'], $userid, $currentPersp['mapwork']]);
+        // create new branch
+        $db->exec('INSERT INTO tree (father, child)
+                    VALUES ( ?,?,?)',[$currentPersp['id'], $newidpersp]);
+        $concCurrentPersp  = $db->exec('SELECT * FROM concpersp WHERE concpersp.persp =?',[$perspid]);
+        // copy of concepts in the mother
+        foreach($concCurrentPersp as $c) {
+            $newidconc=uniqid($userid, true);
+            $db->exec('INSERT INTO concpersp (id, conc, persp, coord_x, coord_y)
+                    VALUES ( ?,?,?,?,? )', [$newidconc, $c['conc'], $newidpersp, $c['coord_x'],$c['coord_y']]);
+        }
+        $relCurrentPersp = $db->exec('SELECT * FROM relationship WHERE relationship.persp =?',[$perspid]);
+        // copy of relationshihps in the mother
+        foreach ($relCurrentPersp as $r){
+            $newidrel=uniqid($userid, true);
+            $db->exec('INSERT INTO relationship (id, conc1, conc2, type, persp, side1, side2, pos1, pos2)
+                    VALUES (?,?,?,?,?,?,?,?,?)', [$newidrel, $r['conc1'], $r['conc2'], $r['type'], $newidpersp,$r['side1'],$r['side2'],$r['side1'],$r['side2']]);
+        }
+
+    });
+
+//freeze current perspective operation
+$f3->route('POST /freeze',
+    function($f3){
+        $db = $f3->get('DB');
+        $body = json_decode($f3->get('BODY'));
+        $perspid = $body->idPersp;
+        $userid = $body->user;
+
+        //set to freeze
+        $db->exec('UPDATE perspective SET freezed = "true" WHERE perspective.id =?',[$perspid]);
+
+        $query = $db->prepare('SELECT * FROM perspective WHERE perspective.id = :id');
+        $query->bindparam(':id', $perspid);
+        $query->execute();
+        $currentPersp = $query->fetch(PDO::FETCH_BOTH);
+        $newidpersp=uniqid($userid, true);
+
+        // create new perspective
+        $db->exec('INSERT INTO perspective (id, name, author, mapwork, freezed, published)
+                    VALUES ( ?,?,?,?,"false","false" )',[$newidpersp, $currentPersp['name'], $userid, $currentPersp['mapwork']]);
+        // create new branch
+        $db->exec('INSERT INTO tree (father, child)
+                    VALUES ( ?,?)',[$currentPersp['id'], $newidpersp]);
+        $concCurrentPersp  = $db->exec('SELECT * FROM concpersp WHERE concpersp.persp =?',[$perspid]);
+        // copy of concepts in the mother
+        foreach($concCurrentPersp as $c) {
+            $newidconc=uniqid($userid, true);
+            $db->exec('INSERT INTO concpersp (id, conc, persp, coord_x, coord_y)
+                    VALUES ( ?,?,?,?,? )', [$newidconc, $c['conc'], $newidpersp, $c['coord_x'],$c['coord_y']]);
+        }
+        $relCurrentPersp = $db->exec('SELECT * FROM relationship WHERE relationship.persp =?',[$perspid]);
+        // copy of relationshihps in the mother
+        foreach ($relCurrentPersp as $r){
+            $newidrel=uniqid($userid, true);
+            $db->exec('INSERT INTO relationship (id, conc1, conc2, type, persp, side1, side2, pos1, pos2)
+                    VALUES (?,?,?,?,?,?,?,?,?)', [$newidrel, $r['conc1'], $r['conc2'], $r['type'], $newidpersp,$r['side1'],$r['side2'],$r['side1'],$r['side2']]);
+        }
+
+    });
+
+
+//publish current perspective operation
+$f3->route('PUT /publish',
+    function($f3){
+        $db = $f3->get('DB');
+        $body = json_decode($f3->get('BODY'));
+        $perspid = $body->idPersp;
+        $db->exec('UPDATE perspective SET published = "true" WHERE perspective.id=?',[$perspid]);
+        // find the mother
+        $query = $db->prepare('SELECT father FROM tree WHERE tree.child = :id');
+        $query->bindparam(':id', $perspid);
+        $query->execute();
+        $mother = $query->fetch(PDO::FETCH_BOTH);
+
+        $query = $db->prepare('SELECT * FROM perspective WHERE perspective.id = :id');
+        $query->bindparam(':id', $mother);
+        $query->execute();
+        $datamother = $query->fetch(PDO::FETCH_BOTH);
+
+        //find the grandmother
+        $query = $db->prepare('SELECT father FROM tree WHERE tree.child = :id');
+        $query->bindparam(':id', $mother);
+        $query->execute();
+        $grandmother = $query->fetch(PDO::FETCH_BOTH);
+
+
+
+        $child = $db->exec('SELECT * FROM tree WHERE tree.father =?',[$mother[0]]);
+        if((empty($child) || count($child) == 1) && $datamother[0]['freezed'] == 'false'  ){
+            $db->exec('DELETE FROM perspective WHERE perspective.id=?',$mother);
+            $db->exec('INSERT INTO tree (father, child) VALUES (values) ',$mother);
+            //TODO: sostituire la prospettiva madre con la figlia
+        }
+    });
+
+//create a new mapwork with the current perspective as root
+$f3->route('POST /createMapwork',
+    function($f3){
+        $db = $f3->get('DB');
+        $body = json_decode($f3->get('BODY'));
+        $perspid = $body->idPersp;
+        $userid = $body->user;
+
+    });
 
 $f3->run();
 ?>
