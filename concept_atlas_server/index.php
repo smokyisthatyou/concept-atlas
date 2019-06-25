@@ -187,33 +187,49 @@ $f3->route('PUT /publish',
         $db = $f3->get('DB');
         $body = json_decode($f3->get('BODY'));
         $perspid = $body->idPersp;
+        $mapwork = $body->mapwork;
+
+
         $db->exec('UPDATE perspective SET published = "true" WHERE perspective.id=?',[$perspid]);
+
         // find the mother
         $query = $db->prepare('SELECT father FROM tree WHERE tree.child = :id');
         $query->bindparam(':id', $perspid);
         $query->execute();
         $mother = $query->fetch(PDO::FETCH_BOTH);
 
+
+
         $query = $db->prepare('SELECT * FROM perspective WHERE perspective.id = :id');
-        $query->bindparam(':id', $mother);
+        $query->bindparam(':id', $mother['father']);
         $query->execute();
         $datamother = $query->fetch(PDO::FETCH_BOTH);
 
+
         //find the grandmother
         $query = $db->prepare('SELECT father FROM tree WHERE tree.child = :id');
-        $query->bindparam(':id', $mother);
+        $query->bindparam(':id', $datamother['id']);
         $query->execute();
         $grandmother = $query->fetch(PDO::FETCH_BOTH);
 
 
+        if($grandmother == false && $datamother['freezed'] == 'false'   ){ //caso madre è radice
 
-        $child = $db->exec('SELECT * FROM tree WHERE tree.father =?',[$mother[0]]);
-        if((empty($child) || count($child) == 1) && $datamother[0]['freezed'] == 'false'  ){
-            $db->exec('DELETE FROM perspective WHERE perspective.id=?',$mother);
-            $db->exec('INSERT INTO tree (father, child) VALUES (values) ',$mother);
-            //TODO: sostituire la prospettiva madre con la figlia
+            $db->exec('UPDATE mapwork SET root = ? WHERE mapwork.id=?',[$perspid,$mapwork]);
+            $db->exec('DELETE FROM perspective WHERE perspective.id=?',[$datamother['id']]);
+            //TODO: capure perchè errore "father cannot be null"
+        }
+
+        $child = $db->exec('SELECT * FROM tree WHERE tree.father =?',[$datamother['id']]);
+
+        if((empty($child) || count($child) == 1) && $datamother['freezed'] == 'false'  ){
+
+
+            $db->exec('DELETE FROM perspective WHERE perspective.id=?',[$datamother['id']]);
+            $db->exec('INSERT INTO tree (father, child) VALUES (?,?) ',[$grandmother['father'],$perspid]);
         }
     });
+
 
 //create a new mapwork with the current perspective as root
 $f3->route('POST /createMapwork',

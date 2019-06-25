@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Giu 25, 2019 alle 19:45
+-- Creato il: Giu 25, 2019 alle 20:55
 -- Versione del server: 10.1.38-MariaDB
 -- Versione PHP: 7.3.4
 
@@ -81,15 +81,6 @@ CREATE TABLE `concpersp` (
   `coord_y` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dump dei dati per la tabella `concpersp`
---
-
-INSERT INTO `concpersp` (`id`, `conc`, `persp`, `coord_x`, `coord_y`) VALUES
-('1', '1', '5', 3, 3),
-('2', '2', '5', 2, 2),
-('3', '3', '5', 6, 7);
-
 -- --------------------------------------------------------
 
 --
@@ -157,10 +148,10 @@ INSERT INTO `perspective` (`id`, `name`, `author`, `mapwork`, `freezed`, `publis
 ('2', 'Organuli Cellulari-v1.1', 'giorgia.manna@edu.unito.it', '1', 'true', 'true'),
 ('3', 'Organuli Cellulari-v.1.2', 'sibilla.merlo@edu.unito.it', '1', 'true', 'true'),
 ('4', 'Organuli Cellulari-v.1.2.1', 'giorgia.manna@edu.unito.it', '1', 'true', 'false'),
-('5', 'Organuli Cellulari-v.1.2.2', 'sibilla.merlo@edu.unito.it', '1', 'true', 'true'),
+('5', 'Oganuli cellualari v-1.1.2.1', 'sibilla.merlo@edu.unito.it', '1', 'false', 'true'),
 ('6', 'Tipi di Cellule Vegetali', 'sibilla.merlo@edu.unito.it', '2', 'true', 'true'),
-('7', 'Statistiche', 'sibilla.merlo@edu.unito.it', '3', 'true', 'true'),
-('8', 'Statistiche ed Equipaggiamento', 'giorgia.manna@edu.unito.it', '3', 'true', 'true'),
+('7', 'Statistiche ', 'sibilla.merlo@edu.unito.it', '3', 'false', 'false'),
+('8', 'Statistiche ed Equipaggiamento', 'sibilla.merlo@edu.unito.it', '3', 'false', 'true'),
 ('9', 'Organuli Cellulari-v.1.2.1.1', 'giorgia.manna@edu.unito.it', '1', 'true', 'false');
 
 -- --------------------------------------------------------
@@ -180,14 +171,6 @@ CREATE TABLE `relationship` (
   `pos1` int(11) NOT NULL,
   `pos2` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dump dei dati per la tabella `relationship`
---
-
-INSERT INTO `relationship` (`id`, `conc1`, `conc2`, `type`, `persp`, `side1`, `side2`, `pos1`, `pos2`) VALUES
-('1', '1', '2', '1', '5', 'a', 'a', 1, 1),
-('2', '1', '3', '1', '5', 'a', 'a', 1, 1);
 
 -- --------------------------------------------------------
 
