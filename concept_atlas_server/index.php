@@ -213,21 +213,21 @@ $f3->route('PUT /publish',
         $grandmother = $query->fetch(PDO::FETCH_BOTH);
 
 
-        if($grandmother == false && $datamother['freezed'] == 'false'   ){ //caso madre è radice
 
+        if($grandmother == false && $datamother['freezed'] == 'false'   ){ //caso madre è radice
             $db->exec('UPDATE mapwork SET root = ? WHERE mapwork.id=?',[$perspid,$mapwork]);
             $db->exec('DELETE FROM perspective WHERE perspective.id=?',[$datamother['id']]);
             //TODO: capure perchè errore "father cannot be null"
+        } else{
+            $child = $db->exec('SELECT * FROM tree WHERE tree.father =?',[$datamother['id']]);
+            if((empty($child) || count($child) == 1) && $datamother['freezed'] == 'false'  ){
+
+                $db->exec('DELETE FROM perspective WHERE perspective.id=?',[$datamother['id']]);
+                $db->exec('INSERT INTO tree (father, child) VALUES (?,?) ',[$grandmother['father'],$perspid]);
+            }
         }
 
-        $child = $db->exec('SELECT * FROM tree WHERE tree.father =?',[$datamother['id']]);
 
-        if((empty($child) || count($child) == 1) && $datamother['freezed'] == 'false'  ){
-
-
-            $db->exec('DELETE FROM perspective WHERE perspective.id=?',[$datamother['id']]);
-            $db->exec('INSERT INTO tree (father, child) VALUES (?,?) ',[$grandmother['father'],$perspid]);
-        }
     });
 
 
