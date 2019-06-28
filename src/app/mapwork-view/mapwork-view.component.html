@@ -1,3 +1,19 @@
-<app-perspective-tree [mapwork]="mapworkid"></app-perspective-tree>
-<app-draw-perspective  [mapwork]="mapworkid"></app-draw-perspective>
-<app-palette [atlas]="currentAtlas"></app-palette>
+<mat-sidenav-container>
+    <mat-sidenav #palette mode="side" position="end" opened>
+        <app-palette [atlas]="currentAtlas"></app-palette>
+    </mat-sidenav>
+    <mat-sidenav #tree mode="side" position="start" opened >
+            <app-perspective-tree [mapwork]="mapworkid"></app-perspective-tree>
+        </mat-sidenav>
+    <mat-sidenav-content>
+        <app-draw-perspective [mapwork]="mapworkid"></app-draw-perspective>
+        <div class="btn-sidenav pull-right">
+            <button mat-button (click)="palette.toggle()"><img
+                    src="https://img.icons8.com/nolan/50/000000/chevron-left.png"></button>
+        </div>
+        <div class="btn-sidenav pull-left">
+                <button mat-button (click)="tree.toggle()"><img
+                        src="https://img.icons8.com/nolan/50/000000/chevron-right.png"></button>
+            </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

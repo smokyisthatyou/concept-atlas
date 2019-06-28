@@ -1,0 +1,8 @@
+mat-sidenav {
+  width: 400px;
+  background-color:  #ffffff;
+}
+.btn-sidenav {
+  position:relative;
+  bottom:2px;
+}
