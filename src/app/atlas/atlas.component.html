@@ -1,2 +1,8 @@
-<app-atlas-list></app-atlas-list>
-<app-atlas-creation *ngIf="userIsAdmin()"></app-atlas-creation>
+<div class="row">
+    <div class="col-sm-10">
+        <app-atlas-list></app-atlas-list>
+    </div>
+    <div class="col-sm-2">
+        <app-atlas-creation *ngIf="userIsAdmin()"></app-atlas-creation>
+    </div>
+</div>

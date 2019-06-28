@@ -21,6 +21,9 @@ import { PerspectiveTreeComponent } from './mapwork-view/perspective-tree/perspe
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule, MatIconModule, MatSidenavModule} from '@angular/material';
 import { DrawPerspectiveComponent } from './mapwork-view/draw-perspective/draw-perspective.component';
+import { MapworkCreationComponent } from './atlas-view/mapwork-creation/mapwork-creation.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -38,6 +41,8 @@ import { DrawPerspectiveComponent } from './mapwork-view/draw-perspective/draw-p
     PaletteComponent,
     PerspectiveTreeComponent,
     DrawPerspectiveComponent,
+    MapworkCreationComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -48,7 +53,10 @@ import { DrawPerspectiveComponent } from './mapwork-view/draw-perspective/draw-p
     MatTreeModule,
     MatIconModule,
     MatButtonModule,
-    MatSidenavModule
+    MatSidenavModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    FormsModule
   ],
   providers: [AuthGuard, {provide: AuthServiceConfig,
     useFactory: getAuthServiceConfigs
