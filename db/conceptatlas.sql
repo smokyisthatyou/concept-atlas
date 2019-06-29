@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Giu 25, 2019 alle 20:55
+-- Creato il: Giu 29, 2019 alle 12:57
 -- Versione del server: 10.1.38-MariaDB
 -- Versione PHP: 7.3.4
 
@@ -55,7 +55,7 @@ CREATE TABLE `concept` (
   `description` varchar(500) NOT NULL,
   `synonyms` varchar(500) DEFAULT NULL,
   `palette` varchar(255) NOT NULL,
-  `mapwork` varchar(255) NOT NULL
+  `mapwork` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -93,17 +93,18 @@ CREATE TABLE `mapwork` (
   `atlas` varchar(255) NOT NULL,
   `privacy` varchar(25) NOT NULL,
   `root` varchar(255) NOT NULL,
-  `description` varchar(500) NOT NULL
+  `description` varchar(500) NOT NULL,
+  `concept` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dump dei dati per la tabella `mapwork`
 --
 
-INSERT INTO `mapwork` (`id`, `name`, `atlas`, `privacy`, `root`, `description`) VALUES
-('1', 'La cellula animale', '1', 'public', '1', 'Spiegazione dei vari componenti e comportamenti della cellulare animale.'),
-('2', 'La cellula vegetale', '1', 'public', '6', 'Spiegazione dei componenti e comportamenti della cellulare vegetale.'),
-('3', 'Battaglia', '2', 'public', '7', 'Regole per la battaglia.');
+INSERT INTO `mapwork` (`id`, `name`, `atlas`, `privacy`, `root`, `description`, `concept`) VALUES
+('1', 'La cellula animale', '1', 'public', '1', 'Spiegazione dei vari componenti e comportamenti della cellulare animale.', NULL),
+('2', 'La cellula vegetale', '1', 'public', '6', 'Spiegazione dei componenti e comportamenti della cellulare vegetale.', NULL),
+('3', 'Battaglia', '2', 'public', '7', 'Regole per la battaglia.', NULL);
 
 -- --------------------------------------------------------
 
@@ -150,8 +151,8 @@ INSERT INTO `perspective` (`id`, `name`, `author`, `mapwork`, `freezed`, `publis
 ('4', 'Organuli Cellulari-v.1.2.1', 'giorgia.manna@edu.unito.it', '1', 'true', 'false'),
 ('5', 'Oganuli cellualari v-1.1.2.1', 'sibilla.merlo@edu.unito.it', '1', 'false', 'true'),
 ('6', 'Tipi di Cellule Vegetali', 'sibilla.merlo@edu.unito.it', '2', 'true', 'true'),
-('7', 'Statistiche ', 'sibilla.merlo@edu.unito.it', '3', 'false', 'false'),
-('8', 'Statistiche ed Equipaggiamento', 'sibilla.merlo@edu.unito.it', '3', 'false', 'true'),
+('7', 'Battaglia', 'sibilla.merlo@edu.unito.it', '3', 'false', 'false'),
+('8', 'Statistiche ed Equipaggiamento', 'sibilla.merlo@edu.unito.it', '3', 'false', 'false'),
 ('9', 'Organuli Cellulari-v.1.2.1.1', 'giorgia.manna@edu.unito.it', '1', 'true', 'false');
 
 -- --------------------------------------------------------
