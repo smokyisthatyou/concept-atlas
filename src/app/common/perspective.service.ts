@@ -27,7 +27,7 @@ export class PerspectiveService {
   }
 
   freezePersp(idPersp: string, user: string) {
-    return this.http.post('http://localhost:8080/concept_atlas_server/freeze', {idPersp, user});
+    return this.http.put('http://localhost:8080/concept_atlas_server/freeze', {idPersp, user});
   }
 
   publishPersp(idPersp: string) {

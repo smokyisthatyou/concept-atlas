@@ -141,7 +141,7 @@ $f3->route('POST /child',
     });
 
 //freeze current perspective operation
-$f3->route('POST /freeze',
+$f3->route('PUT /freeze',
     function($f3){
         $db = $f3->get('DB');
         $body = json_decode($f3->get('BODY'));
