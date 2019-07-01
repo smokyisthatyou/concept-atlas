@@ -55,7 +55,7 @@ export class DrawPerspectiveComponent implements OnInit {
   }
 
 
-  createMpwork(idPersp: string) {
+  createMapwork(idPersp: string) {
     // tslint:disable-next-line:only-arrow-functions
     this.perspService.createMapworkFromPersp(idPersp, this.user.email).subscribe(function() {
       location.reload();
