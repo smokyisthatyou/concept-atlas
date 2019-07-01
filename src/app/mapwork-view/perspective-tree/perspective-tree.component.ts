@@ -16,10 +16,10 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./perspective-tree.component.css']
 })
 
-export class PerspectiveTreeComponent implements OnInit {
+export class PerspectiveTreeComponent implements OnInit, OnDestroy {
 
   user: IUser;
-  // private subscriptions: Subscription[];
+  private subscriptions: Subscription[] = [];
 
   treeControl = new NestedTreeControl<IPerspective>(node => node.children);
   dataSource = new MatTreeNestedDataSource<IPerspective>();
@@ -42,20 +42,20 @@ export class PerspectiveTreeComponent implements OnInit {
 
 
   ngOnInit() {
-    this.authService.currentUser.subscribe(data => this.user = data);
-    this.treeService.getPerspectiveTree(this.mapwork).subscribe(data => {
+    this.subscriptions.push(this.authService.currentUser.subscribe(data => this.user = data));
+    this.subscriptions.push(this.treeService.getPerspectiveTree(this.mapwork).subscribe(data => {
       // @ts-ignore
       this.dataSource.data = data;
       this.treeControl.dataNodes = data;
       this.treeControl.expandAll();
-    });
+    }));
 
   }
-/*
+
   ngOnDestroy() {
-   this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
-*/
+
 
 
 }
