@@ -238,7 +238,7 @@ $f3->route('PUT /publish',
 
 
 //create a new mapwork with the current perspective as root
-$f3->route('POST /createMapwork',
+$f3->route('POST /createmapwork',
     function($f3){
         $db = $f3->get('DB');
         $body = json_decode($f3->get('BODY'));
@@ -302,8 +302,16 @@ $f3->route('POST /createMapwork',
             $db->exec('INSERT INTO relationship (id, conc1, conc2, type, persp, side1, side2, pos1, pos2)
                     VALUES (?,?,?,?,?,?,?,?,?)', [$newidrel, $r['conc1'], $r['conc2'], $r['type'], $newidpersp2, $r['side1'],$r['side2'],$r['side1'],$r['side2']]);
         }
-
     });
+
+$f3->route('POST /deletepersp/@idPersp',
+function($f3){
+    $db = $f3->get('DB');
+    $perspid = $f3->get('PARAMS.idPersp');
+    
+    $db->exec('DELETE FROM perspective WHERE perspective.id = ?',[$perspid] );
+});
+
 
 $f3->run();
 ?>

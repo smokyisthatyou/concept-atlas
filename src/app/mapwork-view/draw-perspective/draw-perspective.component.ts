@@ -20,8 +20,9 @@ export class DrawPerspectiveComponent implements OnInit {
 
   @Input() mapwork: string;
 
-    // tslint:disable-next-line:max-line-length
-  constructor(private perspService: PerspectiveService, private authService: AuthenticationService,  private route: ActivatedRoute, private router: Router) { }
+  // tslint:disable-next-line:max-line-length
+  constructor(private perspService: PerspectiveService, private authService: AuthenticationService, private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit() {
     this.perspService.currentPersp.subscribe(data => this.perspective = data);
@@ -48,11 +49,10 @@ export class DrawPerspectiveComponent implements OnInit {
   publish(idPersp: string) {
     // @ts-ignore
     // tslint:disable-next-line:only-arrow-functions
-    this.perspService.publishPersp(idPersp).subscribe( function() {
+    this.perspService.publishPersp(idPersp).subscribe(function() {
       location.reload();
-  });
+    });
   }
-
 
 
   createMpwork(idPersp: string) {
@@ -62,4 +62,13 @@ export class DrawPerspectiveComponent implements OnInit {
     });
   }
 
+  delete(idPersp: string) {
+
+    // tslint:disable-next-line:only-arrow-functions
+    this.perspService.deletePerspective(idPersp).subscribe(function() {
+      location.reload();
+
+    });
+
+  }
 }
