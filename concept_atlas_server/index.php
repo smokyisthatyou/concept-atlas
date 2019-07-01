@@ -104,6 +104,22 @@ function getTree($f3,$nodeid){
     return $a;
 }
 
+$f3->route('GET /isroot/@perspid/@mapworkid',
+    function($f3){
+        $db = $f3->get('DB');
+        $perspid = $f3->get('PARAMS.perspid');
+        $mapworkid = $f3->get('PARAMS.mapworkid');
+        $query = $db->prepare('SELECT root FROM mapwork WHERE mapwork.id = :id');
+        $query->bindparam(':id', $mapworkid);
+        $query->execute();
+        $mapwork = $query->fetch(PDO::FETCH_BOTH);
+        echo var_dump($mapwork);
+        if($mapwork['root'] == $perspid)
+            return true;
+        else
+            return false;
+    });
+
 //haveAChild operation
 $f3->route('POST /child',
     function($f3){
@@ -140,16 +156,15 @@ $f3->route('POST /child',
 
     });
 
-
 //freeze current perspective operation
-$f3->route('PUT /freeze',
+$f3->route('POST /freeze',
     function($f3){
         $db = $f3->get('DB');
         $body = json_decode($f3->get('BODY'));
         $perspid = $body->idPersp;
         $userid = $body->user;
 
-        //set to freeze
+        //set to freezed
         $db->exec('UPDATE perspective SET freezed = "true" WHERE perspective.id =?',[$perspid]);
 
         $query = $db->prepare('SELECT * FROM perspective WHERE perspective.id = :id');
@@ -171,6 +186,7 @@ $f3->route('PUT /freeze',
             $db->exec('INSERT INTO concpersp (id, conc, persp, coord_x, coord_y)
                     VALUES ( ?,?,?,?,? )', [$newidconc, $c['conc'], $newidpersp, $c['coord_x'],$c['coord_y']]);
         }
+        // copy of relationship types in the mother
         $relCurrentPersp = $db->exec('SELECT * FROM relationship WHERE relationship.persp =?',[$perspid]);
         // copy of relationshihps in the mother
         foreach ($relCurrentPersp as $r){
@@ -180,6 +196,7 @@ $f3->route('PUT /freeze',
         }
 
     });
+
 
 
 //publish current perspective operation
@@ -227,6 +244,64 @@ $f3->route('POST /createMapwork',
         $body = json_decode($f3->get('BODY'));
         $perspid = $body->idPersp;
         $userid = $body->user;
+        $perspname = $db->exec('SELECT name FROM perspective WHERE perspective.id = ?', [$perspid]);
+        echo var_dump($perspname[0]['name']);
+        //cercare atlante prospettiva corrente
+        $atlas = $db->exec('SELECT mapwork.atlas FROM perspective JOIN mapwork on perspective.mapwork = mapwork.id WHERE perspective.id = ?', [$perspid]);
+        echo var_dump($atlas[0]['atlas']);
+
+        //create new mapwork
+        $newidmap = uniqid($userid, true);
+        $db->exec('INSERT INTO mapwork (id, name, atlas, privacy, root, description) VALUES (?,?,?,"public",?,"new mapwork created from perspective")',[$newidmap, $perspname[0]['name'], $atlas[0]['atlas'],  $perspid]);
+        //add user to team map
+        $db->exec('INSERT INTO teammap (id_user, id_map, role) VALUES (?,?,"admin")', [$userid, $newidmap]);
+        // create new perspective equals to current perspective
+        $newidpersp =  uniqid($userid, true);
+        $db->exec('INSERT INTO perspective (id, name, author, mapwork, freezed, published)
+                    VALUES ( ?,?,?,?,"true","false" )',[$newidpersp, $perspname[0]['name'], $userid, $newidmap]);
+        //copy of cocepts
+        $concCurrentPersp  = $db->exec('SELECT * FROM concpersp WHERE concpersp.persp =?',[$perspid]);
+        // copy of concepts in the mother
+        foreach($concCurrentPersp as $c) {
+            $newidconc=uniqid($userid, true);
+            $db->exec('INSERT INTO concpersp (id, conc, persp, coord_x, coord_y)
+                    VALUES ( ?,?,?,?,? )', [$newidconc, $c['conc'], $newidpersp, $c['coord_x'],$c['coord_y']]);
+        }
+        // copy of relationship types
+        $relCurrentPersp = $db->exec('SELECT * FROM relationship WHERE relationship.persp =?',[$perspid]);
+        // copy of relationshihps in the mother
+        foreach ($relCurrentPersp as $r){
+            $newidrel=uniqid($userid, true);
+            $db->exec('INSERT INTO relationship (id, conc1, conc2, type, persp, side1, side2, pos1, pos2)
+                    VALUES (?,?,?,?,?,?,?,?,?)', [$newidrel, $r['conc1'], $r['conc2'], $r['type'], $newidpersp,$r['side1'],$r['side2'],$r['side1'],$r['side2']]);
+        }
+
+        //set mapwork root to new persp
+        $db-> exec('UPDATE mapwork SET mapwork.root = ? WHERE mapwork.id = ?',[$newidpersp, $newidmap]);
+
+
+        //create new private branch
+        $newidpersp2 = uniqid($userid, true);
+        $db->exec('INSERT INTO perspective (id, name, author, mapwork, freezed, published)
+                    VALUES ( ?,?,?,?,"false","false" )',[$newidpersp2, $perspname[0]['name'], $userid, $newidmap]);
+        // create new branch
+        $db->exec('INSERT INTO tree (father, child)
+                    VALUES ( ?,?)',[$newidpersp, $newidpersp2]);
+        $concCurrentPersp  = $db->exec('SELECT * FROM concpersp WHERE concpersp.persp =?',[$newidpersp]);
+        // copy of concepts in the mother
+        foreach($concCurrentPersp as $c) {
+            $newidconc=uniqid($userid, true);
+            $db->exec('INSERT INTO concpersp (id, conc, persp, coord_x, coord_y)
+                    VALUES ( ?,?,?,?,? )', [$newidconc, $c['conc'], $newidpersp2, $c['coord_x'],$c['coord_y']]);
+        }
+        // copy of relationship types in the mother
+        $relCurrentPersp = $db->exec('SELECT * FROM relationship WHERE relationship.persp =?',[$perspid]);
+        // copy of relationshihps in the mother
+        foreach ($relCurrentPersp as $r){
+            $newidrel=uniqid($userid, true);
+            $db->exec('INSERT INTO relationship (id, conc1, conc2, type, persp, side1, side2, pos1, pos2)
+                    VALUES (?,?,?,?,?,?,?,?,?)', [$newidrel, $r['conc1'], $r['conc2'], $r['type'], $newidpersp2, $r['side1'],$r['side2'],$r['side1'],$r['side2']]);
+        }
 
     });
 

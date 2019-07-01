@@ -16,6 +16,7 @@ export class DrawPerspectiveComponent implements OnInit {
   perspective: IPerspective;
   user: IUser;
 
+  isRoot: boolean;
 
   @Input() mapwork: string;
 
@@ -25,6 +26,8 @@ export class DrawPerspectiveComponent implements OnInit {
   ngOnInit() {
     this.perspService.currentPersp.subscribe(data => this.perspective = data);
     this.authService.currentUser.subscribe(data => this.user = data);
+    this.perspService.isRoot(this.perspective.id, this.mapwork).subscribe(data => this.isRoot = data
+    );
   }
 
   haveChild(idPersp: string) {
