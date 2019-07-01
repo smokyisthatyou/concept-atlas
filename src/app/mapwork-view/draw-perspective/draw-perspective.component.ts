@@ -15,6 +15,8 @@ export class DrawPerspectiveComponent implements OnInit {
 
   perspective: IPerspective;
   user: IUser;
+
+
   @Input() mapwork: string;
 
     // tslint:disable-next-line:max-line-length
@@ -47,6 +49,7 @@ export class DrawPerspectiveComponent implements OnInit {
       location.reload();
   });
   }
+
 
 
   createMpwork(idPersp: string) {

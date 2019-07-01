@@ -22,6 +22,7 @@ export class PerspectiveService {
    this.persp.next(persp);
   }
 
+
   haveAChild(idPersp: string, user: string) {
     return this.http.post('http://localhost:8080/concept_atlas_server/child', {idPersp, user});
   }
