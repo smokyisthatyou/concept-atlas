@@ -52,7 +52,6 @@ $f3->route('POST /login',
 $f3->route('GET /atlas',
     function ($f3) {
         $db = $f3->get('DB');
-
         $allAtlas = $db->exec('SELECT id, name, description, owner FROM atlas ');
         echo json_encode($allAtlas);
     });
@@ -229,6 +228,34 @@ $f3->route('POST /createMapwork',
         $userid = $body->user;
 
     });
+
+//palette
+//get palette from atlas specified
+$f3->route('GET /palette/@atlasid',
+    function ($f3) {
+        $db = $f3->get('DB');
+        $atlasid = $f3->get('PARAMS.atlasid');
+        $palette = $db->exec('SELECT id FROM palette WHERE palette.atlas = ?',[$atlasid]);
+        echo json_encode($palette);
+    });
+
+//get all concepts in the palette specified
+$f3->route('GET /concepts/@paletteid',
+    function ($f3) {
+        $db = $f3->get('DB');
+        $paletteid = $f3->get('PARAMS.paletteid');
+        $concepts = $db->exec('SELECT * FROM concept WHERE concept.palette = ?',[$paletteid]);
+        echo json_encode($concepts);
+    });
+
+//get all relation types in the palette specified
+$f3->route('GET /relationtypes/@paletteid',
+function ($f3) {
+    $db = $f3->get('DB');
+    $paletteid = $f3->get('PARAMS.paletteid');
+    $relationtypes = $db->exec('SELECT * FROM relationshiptype WHERE relationshiptype.palette = ?',[$paletteid]);
+    echo json_encode($relationtypes);
+});
 
 $f3->run();
 ?>
