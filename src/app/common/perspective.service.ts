@@ -22,6 +22,12 @@ export class PerspectiveService {
    this.persp.next(persp);
   }
 
+  /* it does not work
+  isRoot(perspid: string, mapworkid: string): Observable<boolean> {
+    return this.http.get<boolean>('http:/localhost:8080/concept_atlas_server/isroot/' + perspid + '/' + mapworkid );
+  }
+  */
+
 
   haveAChild(idPersp: string, user: string) {
     return this.http.post('http://localhost:8080/concept_atlas_server/child', {idPersp, user});
@@ -36,7 +42,10 @@ export class PerspectiveService {
   }
 
   createMapworkFromPersp(idPersp: string, user: string) {
-    return this.http.post('http://localhost:8080/concept_atlas_server/createMapwork', {idPersp, user});
+    return this.http.post('http://localhost:8080/concept_atlas_server/createmapwork', {idPersp, user});
   }
 
+  deletePerspective(idPersp: string) {
+    return this.http.delete('http://localhost:8080/concept_atlas_server/deletepersp/' + idPersp);
+  }
 }

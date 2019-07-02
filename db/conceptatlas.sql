@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Giu 29, 2019 alle 12:57
+-- Creato il: Lug 01, 2019 alle 15:13
 -- Versione del server: 10.1.38-MariaDB
 -- Versione PHP: 7.3.4
 
@@ -223,18 +223,19 @@ INSERT INTO `teamatlas` (`id_user`, `id_atlas`, `role`) VALUES
 
 CREATE TABLE `teammap` (
   `id_user` varchar(255) NOT NULL,
-  `id_map` varchar(255) NOT NULL
+  `id_map` varchar(255) NOT NULL,
+  `role` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dump dei dati per la tabella `teammap`
 --
 
-INSERT INTO `teammap` (`id_user`, `id_map`) VALUES
-('giorgia.manna@edu.unito.it', '1'),
-('giorgia.manna@edu.unito.it', '2'),
-('sibilla.merlo@edu.unito.it', '1'),
-('sibilla.merlo@edu.unito.it', '2');
+INSERT INTO `teammap` (`id_user`, `id_map`, `role`) VALUES
+('giorgia.manna@edu.unito.it', '1', 'admin'),
+('giorgia.manna@edu.unito.it', '2', 'admin'),
+('sibilla.merlo@edu.unito.it', '1', 'admin'),
+('sibilla.merlo@edu.unito.it', '2', 'admin');
 
 -- --------------------------------------------------------
 
@@ -403,8 +404,7 @@ ALTER TABLE `concpersp`
 -- Limiti per la tabella `mapwork`
 --
 ALTER TABLE `mapwork`
-  ADD CONSTRAINT `mapwork_ibfk_1` FOREIGN KEY (`atlas`) REFERENCES `atlas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `mapwork_ibfk_2` FOREIGN KEY (`root`) REFERENCES `perspective` (`id`);
+  ADD CONSTRAINT `mapwork_ibfk_1` FOREIGN KEY (`atlas`) REFERENCES `atlas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `palette`
@@ -416,7 +416,7 @@ ALTER TABLE `palette`
 -- Limiti per la tabella `perspective`
 --
 ALTER TABLE `perspective`
-  ADD CONSTRAINT `perspective_ibfk_1` FOREIGN KEY (`author`) REFERENCES `teammap` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `perspective_ibfk_1` FOREIGN KEY (`author`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `perspective_ibfk_2` FOREIGN KEY (`mapwork`) REFERENCES `mapwork` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -446,8 +446,8 @@ ALTER TABLE `teamatlas`
 --
 ALTER TABLE `teammap`
   ADD CONSTRAINT `teammap_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `teamatlas` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `teammap_ibfk_2` FOREIGN KEY (`id_map`) REFERENCES `mapwork` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
+  ADD CONSTRAINT `teammap_ibfk_2` FOREIGN KEY (`id_map`) REFERENCES `mapwork` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `teammap_ibfk_3` FOREIGN KEY (`id_user`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 --
 -- Limiti per la tabella `tree`
 --
