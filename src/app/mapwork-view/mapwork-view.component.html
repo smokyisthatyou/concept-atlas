@@ -1,10 +1,10 @@
 <mat-sidenav-container>
     <mat-sidenav #palette mode="side" position="end" opened>
-        <app-palette [atlas]="currentAtlas"></app-palette>
+        <app-palette [atlasid]="atlasid" [mapworkid]="mapworkid"></app-palette>
     </mat-sidenav>
-    <mat-sidenav #tree mode="side" position="start" opened >
-            <app-perspective-tree [mapwork]="mapworkid"></app-perspective-tree>
-        </mat-sidenav>
+    <mat-sidenav #tree mode="side" position="start" opened>
+        <app-perspective-tree [mapwork]="mapworkid"></app-perspective-tree>
+    </mat-sidenav>
     <mat-sidenav-content>
         <app-draw-perspective [mapwork]="mapworkid"></app-draw-perspective>
         <div class="btn-sidenav pull-right">

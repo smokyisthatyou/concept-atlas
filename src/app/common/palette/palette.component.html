@@ -14,25 +14,26 @@
         <div class="row no-gutters">
             <div class="col-md-4">
                 <table class="table table-hover">
-                    <tbody>
+                        <tbody *ngFor="let c of concepts">
                         <tr>
-                            <td>Casa</td>
+                            <td (click)="setCurrentConcept(c)">{{c.name | titlecase}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <p class="card-text"><strong>Descrizione </strong>Luogo fisico dove le persone vivono.</p>
-                    <p class="card-text"><strong>Sinonimi </strong>Dimora, Alloggio, Appartamento</p>
-                    <p class="card-text"><strong>Concetti collegati </strong> Famiglia, Indirizzo</p>
-                    <p class="card-text"><strong>Relazioni collegate </strong>Abitare</p>
+                    <p class="card-text"><strong>Descrizione </strong>{{currentConcept?.description}}</p>
+                    <p class="card-text"><strong>Sinonimi </strong>{{currentConcept?.synonyms}}</p>
+                    <p class="card-text"><strong>Concetti collegati </strong> </p>
+                    <p class="card-text"><strong>Relazioni collegate </strong></p>
                 </div>
             </div>
         </div>
     </div>
     <div class="card-header"></div>
-    <div class="card-header"><input class="form-control" type="text" placeholder="Search relation type" aria-label="Search"></div>
+    <div class="card-header"><input class="form-control" type="text" placeholder="Search relation type"
+            aria-label="Search"></div>
     <div class="card-body">
         <div class="btn-group" role="group" aria-label="Basic example">
             <button class="btn btn-secondary" title="Aggiungi nuovo tipo di relazione">Aggiungi</button>
@@ -43,17 +44,16 @@
         <div class="row no-gutters">
             <div class="col-md-4">
                 <table class="table table-hover">
-                    <tbody>
+                    <tbody *ngFor="let rt of relationTypes">
                         <tr>
-                            <td>autore di</td>
+                            <td (click)="setCurrentRelationType(rt)">{{rt.name }}</td>
                         </tr>
-                    </tbody>
                 </table>
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <p class="card-text"><strong>Descrizione </strong>proprietario.</p>
-                    <p class="card-text"><strong>Concetti collegati </strong> Libro, Persona</p>
+                    <p class="card-text"><strong>Descrizione </strong>{{currentRelType?.description}}</p>
+                    <p class="card-text"><strong>Concetti collegati </strong> </p>
                 </div>
             </div>
         </div>
