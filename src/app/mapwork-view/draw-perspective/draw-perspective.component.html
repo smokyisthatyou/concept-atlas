@@ -1,16 +1,18 @@
 <section class="container mt-3">
     <div class="jumbotron">
+        <div *ngIf="perspective != null">
         <span> <b> Perspective name: </b> {{perspective.name}} </span>
         <span> <b> Author: </b> {{perspective.author}} </span>
         <span> <b> Can Modify: </b> <span *ngIf="perspective.freezed == 'true' || perspective.author != user.email">
                 No</span> <span *ngIf="perspective.freezed == 'false' && perspective.author == user.email "> Yes</span>
         </span>
+        </div>
         <br>
         <br>
         <canvas id="draw" height="300" style="background-color:white;"></canvas>
         <br>
         <br>
-        <div class="row flex-nowrap justify-content-between align-items-center">
+        <div *ngIf=" perspective != null" class="row flex-nowrap justify-content-between align-items-center">
             <div class="btn-group" role="group" aria-label="Basic example">
                 <button class="btn btn-secondary" [disabled]="perspective.freezed == 'false'"
                     (click)="haveChild(perspective.id)" title="Work from this Perspective's current state">Have a

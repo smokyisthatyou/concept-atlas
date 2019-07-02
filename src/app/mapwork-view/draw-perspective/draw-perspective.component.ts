@@ -27,8 +27,8 @@ export class DrawPerspectiveComponent implements OnInit {
   ngOnInit() {
     this.perspService.currentPersp.subscribe(data => this.perspective = data);
     this.authService.currentUser.subscribe(data => this.user = data);
-    this.perspService.isRoot(this.perspective.id, this.mapwork).subscribe(data => this.isRoot = data
-    );
+    // this.perspService.isRoot(this.perspective.id, this.mapwork).subscribe(data => this.isRoot = data);
+
   }
 
   haveChild(idPersp: string) {
@@ -58,7 +58,7 @@ export class DrawPerspectiveComponent implements OnInit {
   createMapwork(idPersp: string) {
     // tslint:disable-next-line:only-arrow-functions
     this.perspService.createMapworkFromPersp(idPersp, this.user.email).subscribe(function() {
-      location.reload();
+      window.history.back();
     });
   }
 
