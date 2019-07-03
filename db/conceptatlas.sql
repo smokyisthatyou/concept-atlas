@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Lug 01, 2019 alle 15:13
+-- Creato il: Lug 03, 2019 alle 23:02
 -- Versione del server: 10.1.38-MariaDB
 -- Versione PHP: 7.3.4
 
@@ -81,6 +81,24 @@ CREATE TABLE `concpersp` (
   `coord_y` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dump dei dati per la tabella `concpersp`
+--
+
+INSERT INTO `concpersp` (`id`, `conc`, `persp`, `coord_x`, `coord_y`) VALUES
+('1', '1', '2', 2, 3),
+('10', '1', '5', 2, 3),
+('11', '2', '5', 6, 4),
+('12', '3', '5', 2, 9),
+('2', '2', '2', 7, 7),
+('3', '3', '2', 10, 4),
+('4', '1', '3', 2, 2),
+('5', '2', '3', 6, 6),
+('6', '3', '3', 9, 9),
+('7', '1', '4', 2, 3),
+('8', '2', '4', 6, 7),
+('9', '3', '4', 2, 9);
+
 -- --------------------------------------------------------
 
 --
@@ -149,29 +167,11 @@ INSERT INTO `perspective` (`id`, `name`, `author`, `mapwork`, `freezed`, `publis
 ('2', 'Organuli Cellulari-v1.1', 'giorgia.manna@edu.unito.it', '1', 'true', 'true'),
 ('3', 'Organuli Cellulari-v.1.2', 'sibilla.merlo@edu.unito.it', '1', 'true', 'true'),
 ('4', 'Organuli Cellulari-v.1.2.1', 'giorgia.manna@edu.unito.it', '1', 'true', 'false'),
-('5', 'Oganuli cellualari v-1.1.2.1', 'sibilla.merlo@edu.unito.it', '1', 'false', 'true'),
+('5', 'Organuli Cellulari-v.1.2.2', 'sibilla.merlo@edu.unito.it', '1', 'false', 'false'),
 ('6', 'Tipi di Cellule Vegetali', 'sibilla.merlo@edu.unito.it', '2', 'true', 'true'),
-('7', 'Battaglia', 'sibilla.merlo@edu.unito.it', '3', 'false', 'false'),
-('8', 'Statistiche ed Equipaggiamento', 'sibilla.merlo@edu.unito.it', '3', 'false', 'false'),
+('7', 'Battaglia', 'sibilla.merlo@edu.unito.it', '3', 'true', 'false'),
+('8', 'Statistiche ed Equipaggiamento', 'sibilla.merlo@edu.unito.it', '3', 'true', 'false'),
 ('9', 'Organuli Cellulari-v.1.2.1.1', 'giorgia.manna@edu.unito.it', '1', 'true', 'false');
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `relationship`
---
-
-CREATE TABLE `relationship` (
-  `id` varchar(255) NOT NULL,
-  `conc1` varchar(255) NOT NULL,
-  `conc2` varchar(255) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `persp` varchar(255) NOT NULL,
-  `side1` char(1) NOT NULL,
-  `side2` char(1) NOT NULL,
-  `pos1` int(11) NOT NULL,
-  `pos2` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -257,6 +257,7 @@ INSERT INTO `tree` (`father`, `child`) VALUES
 ('1', '3'),
 ('3', '4'),
 ('3', '5'),
+('4', '5'),
 ('4', '9'),
 ('7', '8');
 
@@ -331,16 +332,6 @@ ALTER TABLE `perspective`
   ADD PRIMARY KEY (`id`),
   ADD KEY `author` (`author`),
   ADD KEY `mapwork` (`mapwork`);
-
---
--- Indici per le tabelle `relationship`
---
-ALTER TABLE `relationship`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `conc1` (`conc1`),
-  ADD KEY `conc2` (`conc2`),
-  ADD KEY `type` (`type`),
-  ADD KEY `persp` (`persp`);
 
 --
 -- Indici per le tabelle `relationshiptype`
@@ -420,15 +411,6 @@ ALTER TABLE `perspective`
   ADD CONSTRAINT `perspective_ibfk_2` FOREIGN KEY (`mapwork`) REFERENCES `mapwork` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `relationship`
---
-ALTER TABLE `relationship`
-  ADD CONSTRAINT `relationship_ibfk_1` FOREIGN KEY (`conc1`) REFERENCES `concpersp` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `relationship_ibfk_2` FOREIGN KEY (`conc2`) REFERENCES `concpersp` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `relationship_ibfk_3` FOREIGN KEY (`type`) REFERENCES `relationshiptype` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `relationship_ibfk_4` FOREIGN KEY (`persp`) REFERENCES `perspective` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Limiti per la tabella `relationshiptype`
 --
 ALTER TABLE `relationshiptype`
@@ -448,6 +430,7 @@ ALTER TABLE `teammap`
   ADD CONSTRAINT `teammap_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `teamatlas` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `teammap_ibfk_2` FOREIGN KEY (`id_map`) REFERENCES `mapwork` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `teammap_ibfk_3` FOREIGN KEY (`id_user`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 --
 -- Limiti per la tabella `tree`
 --
