@@ -9,17 +9,10 @@ import { IRelationType } from '../model/IRelationType';
   providedIn: 'root'
 })
 export class PaletteService {
-  
+
   constructor(private http: HttpClient) {
   }
 
-  setCurrentConcept(concept) {
-    this.concept.next(concept);
-  }
-
-  setCurrentRelationType(relationType: any) {
-    this.relType.next(relationType);
-  }
 
 
   getConcepts(paletteId: string): Observable<IConcept[]> {
