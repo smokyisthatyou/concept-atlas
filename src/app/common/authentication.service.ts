@@ -21,6 +21,10 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
+  public get currentUserRole(): string {
+    return this.currentUserSubject.value.role;
+  }
+  
   /*
   public get currentUserRole(){
     return (this.user.role == 'admin');
