@@ -14,7 +14,6 @@ export class PaletteComponent implements OnInit {
   selectedConcept: IConcept;
   concepts: IConcept[];
   @Input() atlasid: string;
-  @Input() mapworkid: string;
   paletteId: string;
   relationTypes: IRelationType[];
   currentConcept: IConcept;
@@ -40,17 +39,17 @@ export class PaletteComponent implements OnInit {
   */
   }
   ngOnChanges(){
+    this.currentConcept = null;
+    this.currentRelType = null;
    console.log("changes: " + this.atlasid);
     this.paletteService.getConcepts(this.atlasid).subscribe(
       c => {
         this.concepts = c;
         console.log(this.paletteService);
       });
-
     this.paletteService.getRelationTypes(this.atlasid).subscribe(
       r => {
         this.relationTypes = r;
       });
-
   }
 }

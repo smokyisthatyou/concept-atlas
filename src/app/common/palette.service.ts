@@ -10,12 +10,6 @@ import { IRelationType } from '../model/IRelationType';
 })
 export class PaletteService {
   
-  private concept = new BehaviorSubject<IConcept>(null); // TODO: cambiare null
-  currentConcept = this.concept.asObservable();
-
-  private relType = new BehaviorSubject<IRelationType>(null); // TODO: cambiare null
-  currentRelType = this.relType.asObservable();
-
   constructor(private http: HttpClient) {
   }
 
