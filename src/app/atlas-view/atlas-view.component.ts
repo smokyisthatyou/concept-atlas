@@ -19,19 +19,19 @@ export class AtlasViewComponent implements OnInit {
   mapworkList: IMapwork[];
   currentAtlas: IAtlas;
 
-    ngOnInit() {
+  ngOnInit() {
+  }
 
-    }
-
-    // tslint:disable-next-line:max-line-length
+  // tslint:disable-next-line:max-line-length
   constructor(private authenticationService: AuthenticationService, private atlasService: AtlasService, private route: ActivatedRoute, private router: Router) {
     this.route.params.subscribe(params => this.atlasid = params.idatlas);
-   // this.currentAtlas = atlasService.getAtlas(this.atlasid);
+    atlasService.setCurrentAtlasId(this.atlasid);
+    // this.currentAtlas = atlasService.getAtlas(this.atlasid);
   }
 
 
   userIsAdmin() {
-    // non riesco a leggere user.role == 'admin' da authenticationService
+    if(this.authenticationService.currentUserRole == 'admin')
     return true;
   }
 }

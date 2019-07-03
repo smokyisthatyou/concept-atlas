@@ -15,7 +15,7 @@ export class AtlasComponent {
     this.user = authenticationService.getUser();
   }
   userIsAdmin() {
-    // non riesco a leggere user.role == 'admin' da authenticationService
+    if(this.authenticationService.currentUserRole == 'admin')
     return true;
   }
 }

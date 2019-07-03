@@ -13,15 +13,17 @@ import { IAtlas } from '../model/IAtlas';
 export class MapworkViewComponent implements OnInit {
   mapworkid: string;
   currentMapwork: IMapwork;
-  currentAtlas: IAtlas;
+  atlasid: string;
 
   constructor(private atlasService: AtlasService, private route: ActivatedRoute, private router: Router) {
     this.route.params.subscribe(params => this.mapworkid = params.idmapwork);
     // this.currentMapwork = atlasService.getMapwork(this.mapworkid);
-    // this.currentAtlas = atlasService.getAtlas(this.currentMapwork.atlas);
+
   }
 
   ngOnInit() {
+    this.atlasid = this.atlasService.getCurrentAtlasId();
+    console.log(this.atlasid);
   }
 
 }
