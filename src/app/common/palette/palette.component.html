@@ -2,10 +2,10 @@
     <div class="card-header">
         <input class="form-control" type="text" placeholder="Search" [(ngModel)]="searchConc" id="listSearch" aria-label="Search">
     </div>
-    <div class="card-body">
+    <div class="card-body" >
         <div class="btn-group" role="group" aria-label="Basic example">
             <button class="btn btn-secondary" title="Aggiungi nuovo concetto">Aggiungi</button>
-            <button [disabled]="currentConcept==null" class="btn btn-secondary"
+            <button (click)="editConcept()" [disabled]="currentConcept==null" class="btn btn-secondary" 
                 title="Modifica descrizione e sinonimi associate al concetto selezionato.">Modifica</button>
             <button [disabled]="currentConcept==null" class="btn btn-secondary"
                 title="Trova occorrenze concetto all'interno dell'atlante">Trova
