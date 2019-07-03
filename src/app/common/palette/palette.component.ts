@@ -24,11 +24,11 @@ export class PaletteComponent implements OnInit {
   }
 
   setCurrentConcept(concept) {
-    this.paletteService.setCurrentConcept(concept);
+    this.currentConcept = concept;
   }
 
   setCurrentRelationType(relationType) {
-    this.paletteService.setCurrentRelationType(relationType);
+    this.currentRelType = relationType;
   }
 
   ngOnInit() {
@@ -37,26 +37,14 @@ export class PaletteComponent implements OnInit {
          this.paletteId = p
        }
      )
-  
-    this.paletteService.getConcepts(this.atlasid).subscribe(
-      c => {
-        this.concepts = c;
-      });
-
-    this.paletteService.getRelationTypes(this.atlasid).subscribe(
-      r => {
-        this.relationTypes = r;
-      });
-
-    this.paletteService.currentConcept.subscribe(data => this.currentConcept = data);
-    this.paletteService.currentRelType.subscribe(data => this.currentRelType = data);*/
+  */
   }
   ngOnChanges(){
-   
+   console.log("changes: " + this.atlasid);
     this.paletteService.getConcepts(this.atlasid).subscribe(
       c => {
         this.concepts = c;
-        console.log(this.concepts);
+        console.log(this.paletteService);
       });
 
     this.paletteService.getRelationTypes(this.atlasid).subscribe(
@@ -64,7 +52,5 @@ export class PaletteComponent implements OnInit {
         this.relationTypes = r;
       });
 
-    this.paletteService.currentConcept.subscribe(data => this.currentConcept = data);
-    this.paletteService.currentRelType.subscribe(data => this.currentRelType = data);
   }
 }

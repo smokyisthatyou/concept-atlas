@@ -1,5 +1,7 @@
 .fixed{
     position: fixed;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
 }
 
 .card{
