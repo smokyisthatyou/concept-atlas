@@ -24,6 +24,7 @@ import { DrawPerspectiveComponent } from './mapwork-view/draw-perspective/draw-p
 import { MapworkCreationComponent } from './atlas-view/mapwork-creation/mapwork-creation.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { SearchPipe } from './common/search.pipe';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     PerspectiveTreeComponent,
     DrawPerspectiveComponent,
     MapworkCreationComponent,
+    SearchPipe,
 
   ],
   imports: [

@@ -18,10 +18,27 @@ export class PaletteComponent implements OnInit {
   relationTypes: IRelationType[];
   currentConcept: IConcept;
   currentRelType: IRelationType;
+  public search:any = '';
 
   constructor(private paletteService: PaletteService) {
+    
   }
 
+  showConceptConnectedConcepts(currentConcept) {
+    if (currentConcept != null)
+      return "il concetto non è presente ancora in nessuna prospettiva"
+  }
+
+  showConceptConnectedRelationship(currentConcept) {
+    if (currentConcept != null)
+      return "il concetto non è presente ancora in nessuna prospettiva"
+  }
+
+  showRelTypeConnectedConcept(currentRelType) {
+    if (currentRelType != null)
+      return "il tipo di relazione non è presente ancora in nessuna prospettiva"
+
+  }
   setCurrentConcept(concept) {
     this.currentConcept = concept;
   }
@@ -38,10 +55,10 @@ export class PaletteComponent implements OnInit {
      )
   */
   }
-  ngOnChanges(){
+  ngOnChanges() {
     this.currentConcept = null;
     this.currentRelType = null;
-   console.log("changes: " + this.atlasid);
+    console.log("changes: " + this.atlasid);
     this.paletteService.getConcepts(this.atlasid).subscribe(
       c => {
         this.concepts = c;
