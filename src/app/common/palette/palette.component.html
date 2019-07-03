@@ -1,6 +1,6 @@
 <div class="card mb-3 fixed">
     <div class="card-header">
-        <input class="form-control" type="text" placeholder="Search concept" aria-label="Search">
+        <input class="form-control" type="text" placeholder="Search" [(ngModel)]="searchConc" id="listSearch" aria-label="Search">
     </div>
     <div class="card-body">
         <div class="btn-group" role="group" aria-label="Basic example">
@@ -16,7 +16,7 @@
         <div class="row no-gutters">
             <div class="col-md-4">
                 <table class="table table-hover">
-                    <tbody *ngFor="let c of concepts">
+                    <tbody *ngFor="let c of concepts | LockFilter: searchConc">
                         <tr>
                             <td (click)="setCurrentConcept(c)" [style.backgroundColor]="c == currentConcept ? 'rgba(113,106,202,0.3)' : null">{{c.name | titlecase}}</td>
                         </tr>
@@ -27,15 +27,14 @@
                 <div class="card-body">
                     <p class="card-text"><strong>Descrizione </strong>{{currentConcept?.description}}</p>
                     <p class="card-text"><strong>Sinonimi </strong>{{currentConcept?.synonyms}}</p>
-                    <p class="card-text"><strong>Concetti collegati </strong> </p>
-                    <p class="card-text"><strong>Relazioni collegate </strong></p>
+                    <p class="card-text"[style.color]="grey"><strong>Concetti collegati </strong> {{showConceptConnectedConcepts(currentConcept)}}</p>
+                    <p class="card-text"><strong>Relazioni collegate </strong> {{showConceptConnectedRelationship(currentConcept)}}</p>
                 </div>
             </div>
         </div>
     </div>
     <div class="card-header"></div>
-    <div class="card-header"><input class="form-control" type="text" placeholder="Search relation type"
-            aria-label="Search"></div>
+    <div class="card-header"><input class="form-control" type="text" placeholder="Search" [(ngModel)]="searchRel" id="listSearch" aria-label="Search"></div>
     <div class="card-body">
         <div class="btn-group" role="group" aria-label="Basic example">
             <button class="btn btn-secondary" title="Aggiungi nuovo tipo di relazione">Aggiungi</button>
@@ -46,7 +45,7 @@
         <div class="row no-gutters">
             <div class="col-md-4">
                 <table class="table table-hover">
-                    <tbody *ngFor="let rt of relationTypes">
+                    <tbody *ngFor="let rt of relationTypes | LockFilter: searchRel">
                         <tr>
                             <td (click)="setCurrentRelationType(rt)" [style.backgroundColor]="rt == currentRelType ? 'rgba(113,106,202,0.3)' : null" >{{rt.name }}</td>
                         </tr>
@@ -55,7 +54,7 @@
             <div class="col-md-8">
                 <div class="card-body">
                     <p class="card-text"><strong>Descrizione </strong>{{currentRelType?.description}}</p>
-                    <p class="card-text"><strong>Concetti collegati </strong> </p>
+                    <p class="card-text"><strong>Concetti collegati </strong> {{showRelTypeConnectedConcept(currentRelType)}}</p>
                 </div>
             </div>
         </div>
