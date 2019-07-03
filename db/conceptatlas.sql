@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Lug 03, 2019 alle 23:02
+-- Creato il: Lug 03, 2019 alle 23:49
 -- Versione del server: 10.1.38-MariaDB
 -- Versione PHP: 7.3.4
 
@@ -90,6 +90,9 @@ INSERT INTO `concpersp` (`id`, `conc`, `persp`, `coord_x`, `coord_y`) VALUES
 ('10', '1', '5', 2, 3),
 ('11', '2', '5', 6, 4),
 ('12', '3', '5', 2, 9),
+('13', '1', '9', 2, 3),
+('14', '2', '9', 6, 9),
+('15', '3', '9', 2, 2),
 ('2', '2', '2', 7, 7),
 ('3', '3', '2', 10, 4),
 ('4', '1', '3', 2, 2),
@@ -172,6 +175,38 @@ INSERT INTO `perspective` (`id`, `name`, `author`, `mapwork`, `freezed`, `publis
 ('7', 'Battaglia', 'sibilla.merlo@edu.unito.it', '3', 'true', 'false'),
 ('8', 'Statistiche ed Equipaggiamento', 'sibilla.merlo@edu.unito.it', '3', 'true', 'false'),
 ('9', 'Organuli Cellulari-v.1.2.1.1', 'giorgia.manna@edu.unito.it', '1', 'true', 'false');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `relationship`
+--
+
+CREATE TABLE `relationship` (
+  `id` varchar(255) NOT NULL,
+  `conc1` varchar(255) NOT NULL,
+  `conc2` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `persp` varchar(255) NOT NULL,
+  `side1` char(1) NOT NULL,
+  `side2` char(1) NOT NULL,
+  `pos1` int(11) NOT NULL,
+  `pos2` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dump dei dati per la tabella `relationship`
+--
+
+INSERT INTO `relationship` (`id`, `conc1`, `conc2`, `type`, `persp`, `side1`, `side2`, `pos1`, `pos2`) VALUES
+('1', '1', '2', '1', '2', 'a', 'c', 1, 1),
+('2', '1', '3', '1', '2', 'c', 'a', 1, 1),
+('3', '1', '2', '1', '4', 'a', 'c', 1, 1),
+('4', '1', '3', '1', '4', 'c', 'a', 1, 1),
+('5', '1', '2', '1', '5', 'a', 'c', 1, 1),
+('6', '1', '3', '1', '5', 'c', 'a', 1, 1),
+('7', '1', '3', '1', '9', 'c', 'a', 1, 1),
+('8', '1', '2', '1', '9', 'a', 'c', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -334,6 +369,16 @@ ALTER TABLE `perspective`
   ADD KEY `mapwork` (`mapwork`);
 
 --
+-- Indici per le tabelle `relationship`
+--
+ALTER TABLE `relationship`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `conc1` (`conc1`),
+  ADD KEY `conc2` (`conc2`),
+  ADD KEY `type` (`type`),
+  ADD KEY `persp` (`persp`);
+
+--
 -- Indici per le tabelle `relationshiptype`
 --
 ALTER TABLE `relationshiptype`
@@ -409,6 +454,15 @@ ALTER TABLE `palette`
 ALTER TABLE `perspective`
   ADD CONSTRAINT `perspective_ibfk_1` FOREIGN KEY (`author`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `perspective_ibfk_2` FOREIGN KEY (`mapwork`) REFERENCES `mapwork` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `relationship`
+--
+ALTER TABLE `relationship`
+  ADD CONSTRAINT `relationship_ibfk_1` FOREIGN KEY (`conc1`) REFERENCES `concept` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `relationship_ibfk_2` FOREIGN KEY (`conc2`) REFERENCES `concept` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `relationship_ibfk_3` FOREIGN KEY (`type`) REFERENCES `relationshiptype` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `relationship_ibfk_4` FOREIGN KEY (`persp`) REFERENCES `perspective` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `relationshiptype`
