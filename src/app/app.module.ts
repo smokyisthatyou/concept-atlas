@@ -11,7 +11,7 @@ import { MapworkViewComponent } from './mapwork-view/mapwork-view.component';
 import { AtlasCreationComponent } from './atlas/atlas-creation/atlas-creation.component';
 import { MapworkConfigComponent } from './atlas-view/mapwork-config/mapwork-config.component';
 import { UserManagementAtlasComponent } from './atlas-view/user-management-atlas/user-management-atlas.component';
-import { PaletteComponent } from './common/palette/palette.component';
+import { PaletteComponent, EditConceptDialog } from './common/palette/palette.component';
 import { AuthGuard } from './common/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import {MatTreeModule} from '@angular/material/tree';
@@ -19,7 +19,7 @@ import { getAuthServiceConfigs } from './socialloginConfig';
 import {SocialLoginModule, AuthServiceConfig, GoogleLoginProvider} from 'angularx-social-login';
 import { PerspectiveTreeComponent } from './mapwork-view/perspective-tree/perspective-tree.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule, MatIconModule, MatSidenavModule} from '@angular/material';
+import {MatButtonModule, MatIconModule, MatSidenavModule, MatNativeDateModule, MatFormFieldModule, MatDialogModule} from '@angular/material';
 import { DrawPerspectiveComponent } from './mapwork-view/draw-perspective/draw-perspective.component';
 import { MapworkCreationComponent } from './atlas-view/mapwork-creation/mapwork-creation.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -44,7 +44,7 @@ import { SearchPipe } from './common/search.pipe';
     DrawPerspectiveComponent,
     MapworkCreationComponent,
     SearchPipe,
-
+    EditConceptDialog
   ],
   imports: [
     BrowserModule,
@@ -58,12 +58,16 @@ import { SearchPipe } from './common/search.pipe';
     MatSidenavModule,
     ReactiveFormsModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatDialogModule
   ],
   providers: [AuthGuard, {provide: AuthServiceConfig,
     useFactory: getAuthServiceConfigs
 }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [EditConceptDialog],
 })
 
 export class AppModule { }

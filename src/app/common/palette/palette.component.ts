@@ -1,8 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { IAtlas } from 'src/app/model/IAtlas';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { IConcept } from 'src/app/model/IConcept';
 import { PaletteService } from '../palette.service';
 import { IRelationType } from 'src/app/model/IRelationType';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+export interface DialogData {
+  conceptName: string;
+  conceptDesc: string;
+  conceptSyn: string;
+}
 
 @Component({
   selector: 'app-palette',
@@ -10,18 +16,28 @@ import { IRelationType } from 'src/app/model/IRelationType';
   styleUrls: ['./palette.component.css']
 })
 export class PaletteComponent implements OnInit {
-
-  selectedConcept: IConcept;
-  concepts: IConcept[];
+  
   @Input() atlasid: string;
   paletteId: string;
+  concepts: IConcept[];
   relationTypes: IRelationType[];
   currentConcept: IConcept;
   currentRelType: IRelationType;
   public search:any = '';
 
-  constructor(private paletteService: PaletteService) {
-    
+  constructor(private paletteService: PaletteService, public dialog: MatDialog) {
+  }
+
+  editConcept(): void {
+    const dialogRef = this.dialog.open(EditConceptDialog, {
+      height: '500px',
+      width: '330px',
+      data: {conceptName: this.currentConcept.name, conceptDesc: this.currentConcept.description, conceptSyn: this.currentConcept.synonyms}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.currentConcept.description = result;
+    });
   }
 
   showConceptConnectedConcepts(currentConcept) {
@@ -69,4 +85,20 @@ export class PaletteComponent implements OnInit {
         this.relationTypes = r;
       });
   }
+}
+
+@Component({
+  selector: 'edit-concept-dialog',
+  templateUrl: 'edit-concept-dialog.html'
+})
+export class EditConceptDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<EditConceptDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
 }
