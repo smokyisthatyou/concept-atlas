@@ -5,18 +5,20 @@
     <div class="card-body">
         <div class="btn-group" role="group" aria-label="Basic example">
             <button class="btn btn-secondary" title="Aggiungi nuovo concetto">Aggiungi</button>
-            <button class="btn btn-secondary"
+            <button [disabled]="currentConcept==null" class="btn btn-secondary"
                 title="Modifica descrizione e sinonimi associate al concetto selezionato.">Modifica</button>
-            <button class="btn btn-secondary" title="Trova occorrenze concetto all'interno dell'atlante">Trova
+            <button [disabled]="currentConcept==null" class="btn btn-secondary"
+                title="Trova occorrenze concetto all'interno dell'atlante">Trova
                 occorrenze</button>
-            <button class="btn btn-secondary" title="Elimina concetto">Elimina</button>
+            <button [disabled]="currentConcept==null" class="btn btn-secondary"
+                title="Elimina concetto">Elimina</button>
         </div>
         <div class="row no-gutters">
             <div class="col-md-4">
                 <table class="table table-hover">
-                        <tbody *ngFor="let c of concepts">
+                    <tbody *ngFor="let c of concepts">
                         <tr>
-                            <td (click)="setCurrentConcept(c)">{{c.name | titlecase}}</td>
+                            <td (click)="setCurrentConcept(c)" [style.backgroundColor]="c == currentConcept ? 'rgba(113,106,202,0.3)' : null">{{c.name | titlecase}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -37,16 +39,16 @@
     <div class="card-body">
         <div class="btn-group" role="group" aria-label="Basic example">
             <button class="btn btn-secondary" title="Aggiungi nuovo tipo di relazione">Aggiungi</button>
-            <button class="btn btn-secondary"
+            <button class="btn btn-secondary" [disabled]="currentRelType==null" 
                 title="Modifica descrizione associata al tipo di relazione selezionato">Modifica</button>
-            <button class="btn btn-secondary" title="Elimina tipo di relazione">Elimina</button>
+            <button class="btn btn-secondary" [disabled]="currentRelType==null"  title="Elimina tipo di relazione">Elimina</button>
         </div>
         <div class="row no-gutters">
             <div class="col-md-4">
                 <table class="table table-hover">
                     <tbody *ngFor="let rt of relationTypes">
                         <tr>
-                            <td (click)="setCurrentRelationType(rt)">{{rt.name }}</td>
+                            <td (click)="setCurrentRelationType(rt)" [style.backgroundColor]="rt == currentRelType ? 'rgba(113,106,202,0.3)' : null" >{{rt.name }}</td>
                         </tr>
                 </table>
             </div>

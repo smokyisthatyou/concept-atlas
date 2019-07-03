@@ -9,7 +9,6 @@
         <th scope="col">Descrizione</th>
         <th scope="col">Proprietario</th>
         <th scope="col"></th>
-        <th scope="col">ID</th>
       </tr>
     </thead>
     <tbody *ngFor="let a of atlasList">
@@ -18,7 +17,6 @@
         <td>{{a.description}}</td>
         <td>{{a.owner}}</td>
         <td><button type="button" class="btn btn-secondary" (click)="deleteAtlas(a)">Delete</button></td>
-        <td>{{a.id}}</td>
       </tr>
     </tbody>
 
