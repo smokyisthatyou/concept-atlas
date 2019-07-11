@@ -338,8 +338,17 @@ function($f3){
 
     $db->exec('DELETE FROM perspective WHERE perspective.id = ?',[$perspid] );
 });
+/*
+$f3->route('POST /createmapwork',
+    function($f3){
+    $db = $f3->get('DB');
+    $body = json_decode($f3->get('BODY'));
+    $name = $body->name;
+    $desc = $body->desc;
+    $syn = $body->syn;
+    $newidconc = uniqid($userid, true);
+    $db->exec('INSERT INTO concept (id, name, description, synonyms, palette, mapwork) VALUES (?,?,?,"public",?,"new mapwork created from perspective")',[$newidmap, $perspname[0]['name'], $atlas[0]['atlas'],  $perspid]);
 
-
-
+*/
 $f3->run();
 ?>

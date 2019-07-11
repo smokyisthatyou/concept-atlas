@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Aggiungi nuovo concetto</h1>
+<div mat-dialog-content>
+    <p>Nome</p>
+    <mat-form-field>
+        <input matInput [(ngModel)]="data.conceptName">
+    </mat-form-field>
+    <p>Descrizione</p>
+    <mat-form-field>
+        <textarea style="height: 150px; width:280px !important" [(ngModel)]="data.conceptDesc"></textarea>
+    </mat-form-field>
+    <p>Sinonimi</p>
+    <mat-form-field>
+        <textarea style="height: 50px; width:280px !important" [(ngModel)]="data.conceptSyn"></textarea>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

@@ -4,7 +4,7 @@
     </div>
     <div class="card-body" >
         <div class="btn-group" role="group" aria-label="Basic example">
-            <button class="btn btn-secondary" title="Aggiungi nuovo concetto">Aggiungi</button>
+            <button (click)="newConcept()" class="btn btn-secondary" title="Aggiungi nuovo concetto">Aggiungi</button>
             <button (click)="editConcept()" [disabled]="currentConcept==null" class="btn btn-secondary" 
                 title="Modifica descrizione e sinonimi associate al concetto selezionato.">Modifica</button>
             <button [disabled]="currentConcept==null" class="btn btn-secondary"
@@ -16,7 +16,7 @@
         <div class="row no-gutters">
             <div class="col-md-4">
                 <table class="table table-hover">
-                    <tbody *ngFor="let c of concepts | LockFilter: searchConc">
+                    <tbody *ngFor="let c of concepts | Filter: searchConc">
                         <tr>
                             <td (click)="setCurrentConcept(c)" [style.backgroundColor]="c == currentConcept ? 'rgba(113,106,202,0.3)' : null">{{c.name | titlecase}}</td>
                         </tr>
@@ -45,7 +45,7 @@
         <div class="row no-gutters">
             <div class="col-md-4">
                 <table class="table table-hover">
-                    <tbody *ngFor="let rt of relationTypes | LockFilter: searchRel">
+                    <tbody *ngFor="let rt of relationTypes | Filter: searchRel">
                         <tr>
                             <td (click)="setCurrentRelationType(rt)" [style.backgroundColor]="rt == currentRelType ? 'rgba(113,106,202,0.3)' : null" >{{rt.name }}</td>
                         </tr>

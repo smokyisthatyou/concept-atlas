@@ -10,6 +10,7 @@ import { IRelationType } from '../model/IRelationType';
 })
 export class PaletteService {
 
+
   constructor(private http: HttpClient) {
   }
 
@@ -21,6 +22,10 @@ export class PaletteService {
 
   getRelationTypes(paletteId: string): Observable<IRelationType[]> {
     return this.http.get<IRelationType[]>('http://localhost:8080/concept_atlas_server/relationtypes/' + paletteId);
+  }
+
+  addNewConcept(name: string, desc: string, syn: string) {
+    return this.http.post('http://localhost:8080/concept_atlas_server/addConcept', { name, desc, syn });
   }
 
   getPalette(atlasId: string) {
