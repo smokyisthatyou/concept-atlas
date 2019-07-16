@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Lug 03, 2019 alle 23:49
+-- Creato il: Lug 16, 2019 alle 10:53
 -- Versione del server: 10.1.38-MariaDB
 -- Versione PHP: 7.3.4
 
@@ -41,7 +41,7 @@ CREATE TABLE `atlas` (
 
 INSERT INTO `atlas` (`id`, `name`, `description`, `owner`) VALUES
 ('1', 'Biologia', 'Questo atlas tratta di vari argomenti riguardanti l\'ambito della biologia. ', 'giorgia.manna@edu.unito.it'),
-('2', 'Doungeon&Dragons', 'Questo atlas contiene le istruzioni schematizzate per il gioco di ruolo di D&D.', 'sibilla.merlo@edu.unito.it');
+('2', 'Doungeon & Dragons', 'Questo atlas contiene le istruzioni schematizzate per il gioco di ruolo di D&D.', 'sibilla.merlo@edu.unito.it');
 
 -- --------------------------------------------------------
 
