@@ -24,8 +24,25 @@ export class PaletteComponent implements OnInit {
   currentConcept: IConcept;
   currentRelType: IRelationType;
   public search:any = '';
+  conceptNew: IConcept;
 
   constructor(private paletteService: PaletteService, public dialog: MatDialog) {
+  }
+
+  newConcept(): void {
+    const dialogRef = this.dialog.open(NewConceptDialog, {
+      height: '600px',
+      width: '330px', 
+      data: {conceptName: '', conceptDesc: '', conceptSyn: ''}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.conceptNew.name = result.name;
+      this.conceptNew.description = result.conceptDesc;
+      this.conceptNew.synonyms = result.conceptSyn;
+      this.paletteService.addNewConcept(this.conceptNew.name,this.conceptNew.description,this.conceptNew.synonyms);
+      this.conceptNew = null;
+    });
   }
 
   editConcept(): void {
@@ -36,7 +53,8 @@ export class PaletteComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.currentConcept.description = result;
+      this.currentConcept.description = result.conceptDesc;
+      this.currentConcept.synonyms = result.conceptSyn;
     });
   }
 
@@ -95,6 +113,21 @@ export class EditConceptDialog {
 
   constructor(
     public dialogRef: MatDialogRef<EditConceptDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
+@Component({
+  selector: 'new-concept-dialog',
+  templateUrl: 'new-concept-dialog.html'
+})
+export class NewConceptDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<NewConceptDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   onNoClick(): void {

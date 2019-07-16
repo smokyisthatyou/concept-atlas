@@ -11,7 +11,7 @@ import { MapworkViewComponent } from './mapwork-view/mapwork-view.component';
 import { AtlasCreationComponent } from './atlas/atlas-creation/atlas-creation.component';
 import { MapworkConfigComponent } from './atlas-view/mapwork-config/mapwork-config.component';
 import { UserManagementAtlasComponent } from './atlas-view/user-management-atlas/user-management-atlas.component';
-import { PaletteComponent, EditConceptDialog } from './common/palette/palette.component';
+import { PaletteComponent, EditConceptDialog, NewConceptDialog } from './common/palette/palette.component';
 import { AuthGuard } from './common/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import {MatTreeModule} from '@angular/material/tree';
@@ -44,7 +44,8 @@ import { SearchPipe } from './common/search.pipe';
     DrawPerspectiveComponent,
     MapworkCreationComponent,
     SearchPipe,
-    EditConceptDialog
+    EditConceptDialog,
+    NewConceptDialog
   ],
   imports: [
     BrowserModule,
@@ -67,7 +68,7 @@ import { SearchPipe } from './common/search.pipe';
     useFactory: getAuthServiceConfigs
 }],
   bootstrap: [AppComponent],
-  entryComponents: [EditConceptDialog],
+  entryComponents: [EditConceptDialog,NewConceptDialog],
 })
 
 export class AppModule { }
