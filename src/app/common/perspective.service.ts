@@ -16,6 +16,7 @@ export class PerspectiveService {
 
   getPerspectiveTree(mapworkid: string): Observable<IPerspective[]> {
     return this.http.get<IPerspective[]>('http://localhost:8080/concept_atlas_server/perspectivetree/' + mapworkid );
+
   }
 
   setCurrentPersp(persp) {

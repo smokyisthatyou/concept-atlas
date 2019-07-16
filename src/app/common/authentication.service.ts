@@ -42,6 +42,8 @@ export class AuthenticationService {
     this.user = null;
   }
 
+
+
   sendToRestApiMethod(token: string) {
     return this.http.post('http://localhost:8080/concept_atlas_server/login', { token }
     ).subscribe(

@@ -31,6 +31,7 @@ export class AppComponent {
       });
   }
 
+
   logOut() {
     // tslint:disable-next-line:only-arrow-functions
     this.socialAuthService.signOut().then(function () {

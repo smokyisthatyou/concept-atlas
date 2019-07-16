@@ -206,35 +206,9 @@ $f3->route('PUT /publish',
         $db = $f3->get('DB');
         $body = json_decode($f3->get('BODY'));
         $perspid = $body->idPersp;
-
-
-        //if root or more than 1 child only set perspective to public
+        
         $db->exec('UPDATE perspective SET published = "true" WHERE perspective.id=?',[$perspid]);
 
-        // find the mother
-        $query = $db->prepare('SELECT father FROM tree WHERE tree.child = :id');
-        $query->bindparam(':id', $perspid);
-        $query->execute();
-        $mother = $query->fetch(PDO::FETCH_BOTH);
-
-        $query = $db->prepare('SELECT * FROM perspective WHERE perspective.id = :id');
-        $query->bindparam(':id', $mother['father']);
-        $query->execute();
-        $datamother = $query->fetch(PDO::FETCH_BOTH);
-
-        //find the grandmother
-        $query = $db->prepare('SELECT father FROM tree WHERE tree.child = :id');
-        $query->bindparam(':id', $datamother['id']);
-        $query->execute();
-        $grandmother = $query->fetch(PDO::FETCH_BOTH);
-
-        $child = $db->exec('SELECT * FROM tree WHERE tree.father =?',[$datamother['id']]);
-
-        // if 0 or 1 child, rewrite mother perspective
-        if((empty($child) || count($child) == 1) && $datamother['freezed'] == 'false'  ){
-            $db->exec('DELETE FROM perspective WHERE perspective.id=?',[$datamother['id']]);
-            $db->exec('INSERT INTO tree (father, child) VALUES (?,?) ',[$grandmother['father'],$perspid]);
-            }
  });
 
 
